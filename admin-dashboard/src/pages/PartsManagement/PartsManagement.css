@@ -1,0 +1,70 @@
+.maintenance-wrapper {
+    width: 1000px;
+  }
+  
+  .maintenance-request {
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .maintenance-text {
+    padding-left: 20px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  /* Custom status badge styling */
+  .status-badge {
+    display: inline-block;
+    width: 75px; /* Set a fixed width */
+    height: 24px; /* Set a fixed height */
+    line-height: 24px; /* Vertically center text by matching the height */
+    padding: 2px 5px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    overflow: hidden; /* Prevent text overflow */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  /* Status colors */
+  .status-badge.pending {
+    background-color: rgba(255, 243, 210, 1); /* Yellow for Pending */
+    color: rgba(235, 122, 18, 1);
+  }
+  
+  .status-badge.approved {
+    background-color: rgba(211, 252, 197, 1); /* Green for Approved */
+    color: rgba(0, 191, 53, 1);
+  }
+  
+  /* Additional styles for the DataGrid to prevent scroll bars */
+  .MuiDataGrid-root {
+    border: 0;
+    overflow: hidden;
+  }
+  
+  .MuiDataGrid-virtualScroller {
+    overflow: hidden !important; /* Ensure no vertical scroll */
+  }
+  
+  /* Additional row styling for better alignment */
+  .MuiDataGrid-row {
+    height: 52px; /* Ensure row height fits contents */
+    display: flex;
+    align-items: center;
+  }
+  
+  .MuiDataGrid-cell {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  

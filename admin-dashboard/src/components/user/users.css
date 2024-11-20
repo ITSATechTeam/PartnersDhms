@@ -1,0 +1,72 @@
+/* Base styles */
+.userList {
+    flex: 4;
+    width: 100%;
+    margin-right: 10px;
+    padding-left: 14px;
+    color: rgba(255, 255, 255, 1);
+}
+
+.pendingRequest {
+    color: gray;
+    font-family: 'Nunito', sans-serif;
+    margin-left: 0;
+    padding: 10px;
+    margin-top: 3px;
+}
+
+/* Ensure DataGrid has no scrollbars */
+.MuiDataGrid-root {
+    overflow: hidden; /* Remove scrollbars */
+}
+
+.MuiDataGrid-virtualScroller {
+    overflow: hidden !important; /* Ensure no scroll on rows */
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .userList {
+        margin-right: 5px;
+        padding-left: 10px;
+    }
+
+    .pendingRequest {
+        padding: 8px;
+        margin-top: 2px;
+    }
+}
+
+@media (max-width: 768px) {
+    .userList {
+        margin-right: 0;
+        padding-left: 8px;
+        font-size: 90%; /* Reduce font size */
+    }
+
+    .pendingRequest {
+        padding: 6px;
+        font-size: 90%; /* Smaller font size for smaller screens */
+        margin-top: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .userList {
+        flex: 1;
+        width: 100%;
+        margin-right: 0;
+        padding-left: 5px;
+        font-size: 85%; /* Further reduce font size for mobile */
+    }
+
+    .pendingRequest {
+        padding: 5px;
+        font-size: 85%; /* Smaller font size for mobile */
+        margin-top: 1px;
+    }
+}
+
+
+
+

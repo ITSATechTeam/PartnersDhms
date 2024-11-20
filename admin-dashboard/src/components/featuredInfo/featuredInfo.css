@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+.top {
+  margin: 20px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.top h1 {
+  font-size: 25px;
+  font-weight: 500;
+  color: #2b2b2b;
+  margin-bottom: 20px;
+  margin-right: 535px;
+}
+
+.overview {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #555;
+  margin-left: 15px;
+}
+
+/* Container for the featured items */
+.featured {
+  display: flex;
+  justify-content: space-between;
+  width: 99%;
+  margin-left: 5px;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.featuredItem {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Featured content */
+.featuredContent {
+  display: flex;
+  align-items: center;
+}
+
+/* Icons styling */
+.icon {
+  font-size: 30px;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Individual icon background colors */
+.first {
+  background-color: #e3d7fe;
+  color: #7a51e0;
+}
+
+.second {
+  background-color: #fde8d5;
+  color: #f29822;
+}
+
+.third {
+  background-color: #f8d4d5;
+  color: #e05a57;
+}
+
+.fourth {
+  background-color: #d6f8d6;
+  color: #47c86a;
+}
+
+/* Info styling */
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.count {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.label {
+  font-size: 12px;
+  color: #777;
+}
+
+/* MEDIA QUERIES FOR RESPONSIVENESS */
+
+/* For tablets (landscape and portrait) */
+@media only screen and (max-width: 768px) {
+  .top h1 {
+    font-size: 22px;
+    margin-right: 0;
+  }
+
+  .overview {
+    font-size: 10px;
+  }
+
+  .featuredItem {
+    padding: 15px;
+    margin: 8px;
+  }
+
+  .icon {
+    font-size: 24px;
+    padding: 8px;
+  }
+
+  .count {
+    font-size: 16px;
+  }
+
+  .label {
+    font-size: 10px;
+  }
+
+  .featured {
+    justify-content: center; /* Center the items */
+  }
+}
+
+/* For mobile devices */
+@media only screen and (max-width: 480px) {
+  .top h1 {
+    font-size: 18px;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .overview {
+    font-size: 9px;
+    margin-bottom: 15px;
+  }
+
+  .featuredItem {
+    padding: 10px;
+    margin: 6px;
+  }
+
+  .icon {
+    font-size: 20px;
+    padding: 6px;
+  }
+
+  .count {
+    font-size: 14px;
+  }
+
+  .label {
+    font-size: 9px;
+  }
+
+  .featured {
+    flex-direction: column; /* Stack items vertically on mobile */
+  }
+
+  .featuredItem {
+    width: 30%; /* Full width for mobile */
+    
+  }
+}

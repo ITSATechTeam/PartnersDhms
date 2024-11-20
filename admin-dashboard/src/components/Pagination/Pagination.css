@@ -1,0 +1,31 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  display: flex;
+  align-items: center;
+  background-color:  rgba(255, 255, 255, 1);
+  
+  
+  border: 1px solid;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border-color: #ddd;
+  cursor: pointer;
+}
+
+.page-button .pagination-icon {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+

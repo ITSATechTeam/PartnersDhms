@@ -1,0 +1,66 @@
+.progressBar {
+  background: rgb(251, 251, 255);
+  text-align: center;
+  margin-right: 10px;
+  height: 35vh;
+  margin-left: -80px;
+  margin-top: 113px;
+  border-radius: 10px;
+}
+h5 {
+  margin-right: 50px;
+  color: darkgray;
+  margin-left: 0;
+}
+.rightProgress {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  /* margin: 0; */
+  color: rgba(42, 102, 176, 1);
+  /* font-size: 20px;
+  margin-left: 30%;
+  margin-top: 5px; */
+
+  font-family: Nunito;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 27.28px;
+  text-align: center;
+}
+
+.taskCompletion {
+  font-family: "Nunito", sans-serif;
+  margin-top: 10px;
+}
+
+/* .progressBar {
+  text-align: center;
+} */
+
+.circular-progress-bar {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.progress-circle {
+  display: block;
+}
+
+.icon-container {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speed-icon {
+  font-size: 36px; /* Adjust the size of the icon */
+  color: rgba(42, 102, 176, 1); /* Adjust the color to match your theme */
+}

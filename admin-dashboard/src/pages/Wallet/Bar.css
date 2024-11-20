@@ -1,0 +1,80 @@
+.filter-bar {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  justify-content: space-between; /* Distribute space between elements */
+}
+
+.filter-search {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px; /* Maintain some margin between search and filter */
+}
+
+.filter-icon-container {
+  display: flex;
+  align-items: center; /* Center align items in the container */
+  cursor: pointer;
+  padding: 5px 10px; /* Add horizontal padding for better click area */
+  border: 1px solid rgba(195, 195, 195, 1);
+  margin-right: 640px;/* Reduced margin to bring it closer to the search input */
+}
+
+.filter-icon {
+  color: #808080;
+  font-size: 28px;
+  margin-right: 5px;
+}
+
+.filter-text {
+  font-size: 16px;
+  color: #808080;
+}
+
+.filter-options {
+  position: absolute; /* Position it absolutely to appear above other elements */
+  background-color: white; /* Set background to make options visible */
+  border: 1px solid #ddd; /* Add a border for distinction */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  z-index: 1000; /* Ensure it appears on top */
+}
+
+.filter-options button {
+  padding: 10px; /* Add padding for button spacing */
+  border: none; /* Remove default button borders */
+  background: none; /* Remove background */
+  cursor: pointer; /* Pointer cursor for buttons */
+  color: #808080; /* Match the color with other text elements */
+  width: 100%; /* Make buttons fill the width */
+  text-align: left; /* Align text to the left */
+}
+
+.filter-options button:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}
+
+.export-button {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px; /* Add horizontal padding for better click area */
+  background-color: white;
+  border: 1px solid rgba(195, 195, 195, 1);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.export-icon {
+  color: #808080;
+  font-size: 28px;
+  margin-right: 5px;
+}
+
+.export-text {
+  font-size: 16px;
+  color: #808080;
+}
+
+

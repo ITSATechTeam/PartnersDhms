@@ -1,0 +1,105 @@
+
+
+.topissues{
+    background: rgb(251, 251, 255);
+    margin-right: 10px;
+    margin-top: 8px;
+    /* max-width:  1000px; */
+    margin-left: -80px;
+    /* flex: 4; */
+    border-radius: 5px;
+    padding: 9px;
+    height: 25.5%;
+}
+
+.issues{
+    margin-top: 12px;
+    margin-right: 15px;
+    padding: 10px;
+   
+}
+ .matter{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+ }
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .label {
+    /* width: 100px; Adjust label width */
+    text-align: left;
+    font-weight: 400;
+    font-size: 11px;
+    margin-left: 12px;
+    color: rgba(27, 27, 27, 1);
+    font-weight: 9;
+    padding-right: 0;
+  }
+
+  .labelx{
+    font-weight: bold;
+  }
+  
+  .progress-bar {
+    height: 5px; /* Slimmer progress bar */
+    background-color: rgba(89, 162, 234, 1);
+    border-radius: 5px;
+    margin: 0 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Animation for the progress bar filling from left to right */
+  @keyframes growProgress {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: rgba(89, 162, 234, 1);
+    border-radius: 5px 0 0 5px;
+    transition: width 0.5s ease;
+    animation: growProgress 2s linear forwards; /* Adding the animation */
+  }
+  
+  /* Specific widths for individual progress bars */
+  .screen-report {
+    width: 62px; /* Width for Facebook progress bar */
+  }
+
+  .battery-issue{
+    width: 70px;
+  }
+
+  .keyboard-issue{
+    width: 60px;
+  }
+
+  .motherboard-issue{
+    width: 48px;
+  }
+  
+  .maintenance-issue {
+    width: 45px; /* Reduced width for WhatsApp progress bar */
+    margin-left: -30px;
+  }
+  
+  .progress-fill {
+    animation: growProgress 5s linear forwards; /* Same animation for WhatsApp */
+  }
+.maintenance{
+    margin-right: 45px;
+}
+  

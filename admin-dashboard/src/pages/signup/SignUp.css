@@ -1,0 +1,778 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Montserrat:wght@400;700&display=swap');
+
+.sign-up,
+.sign-up * {
+  box-sizing: border-box;
+}
+.sign-up {
+  background: #ffffff;
+  height: 950px;
+  position: relative;
+  /* overflow: hidden; */
+  display: flex;
+  flex-direction: column;
+}
+.sign-up2 {
+  background: #f7f7fb;
+  width: 640px;
+  height: 100%;
+  position: relative;
+  left: 640px;
+  top: px;
+ 
+  /* overflow: hidden; */
+}
+.sign-up3 {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 34px;
+  width: 500px;
+  height: 920px;
+  position: absolute;
+  left: 60px;
+  top: 30px;
+}
+.frame-1000005958 {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  left: 34px;
+  top: 34px;
+}
+.frame-1000005957 {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.create-your-account {
+  color: var(--foundation-gray-gray-800, #212121);
+  text-align: left;
+  font-family: "Nunito-Bold", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+  padding: 20px;
+}
+.frame-1000006794 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 432px;
+  position: absolute;
+  left: 34px;
+  top: 91px;
+}
+.frame-1000005956 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.frame-1000005955 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  width: 432px;
+  position: relative;
+}
+.frame-11939 {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* .input-text{
+  background: #f2f5fa;
+  border-radius: 8px;
+  padding: 10px;
+} */
+.frame-11938 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.label {
+  color: #171a1c;
+  text-align: left;
+  font-family: "Nunito-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  position: relative;
+}
+
+.label2 {
+  width: 100%;
+} 
+.frame-11937 {
+  background: #f2f5fa;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative; /* Added this */
+  width: 100%; /* Ensures it takes up the full width */
+  max-height: 44px;
+}
+.frame-11936 {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+}
+.input-text {
+  flex-grow: 1;
+  border: none;
+  background: #f2f5fa;
+  border-radius: 8px;
+  font-family: "Nunito", Helvetica, sans-serif;
+  font-weight: 400;
+  color: var(--foundation-graygray-300);
+  font-size: 14px;
+  outline: none;
+  padding: 13px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative; /* Added this */
+  width: 100%; /* Ensures it takes up the full width */
+  /* max-height: 44px; */
+}
+.frame-11940 {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.frame-11941 {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+  /* background: #f2f5fa; */
+ 
+
+  
+}
+
+.frame-427319282 {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.frame-11943 {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+ 
+}
+.frame-11942 {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.frame-119382 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 343px;
+  position: relative;
+}
+.label2 {
+  color: #171a1c;
+  text-align: left;
+  font-family: "Nunito-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  position: relative;
+  align-self: stretch;
+}
+.eye-off {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+.fi-eye-off {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0%;
+  left: 0%;
+  bottom: 0%;
+  top: 0%;
+  overflow: visible;
+}
+.frame-1000006009 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.your-password-must-include-at-least {
+  color: var(--foundation-gray-gray-700, #2b2b2b);
+  text-align: left;
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 500;
+  position: relative;
+}
+.frame-1000006007 {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.component-17 {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.component-16 {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  position: relative;
+}
+.ellipse-986 {
+  background: var(--foundation-blue-blue-500, #2a66b0);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.check {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  overflow: visible;
+}
+.at-least-8-characters-long {
+  color: #2a66b0;
+  text-align: left;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 400;
+  position: relative;
+}
+.component-18 {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.check2 {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  overflow: visible;
+}
+.at-least-8-characters-long-span2 {
+  color: #2a66b0;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 400;
+}
+.at-least-8-characters-long-span3 {
+  color: #2a66b0;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.at-least-8-characters-long-span4 {
+  color: #2a66b0;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 400;
+}
+.component-20 {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.ellipse-9862 {
+  background: var(--foundation-gray-gray-50, #ececec);
+  border-radius: 50%;
+  border-style: solid;
+  border-color: var(--foundation-gray-gray-100, #c3c3c3);
+  border-width: 1px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.check3 {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  overflow: visible;
+}
+.at-least-8-characters-long2 {
+  color: var(--foundation-gray-gray-500, #3c3c3c);
+  text-align: left;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 400;
+  position: relative;
+}
+.component-21 {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.check4 {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  overflow: visible;
+}
+.frame-427319281 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.checkbox {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  position: relative;
+}
+.box {
+  background: var(--cyber-primary, #052449);
+  border-radius: 3px;
+  border-style: solid;
+  border-color: var(--cyber-sec, #1086c1);
+  border-width: 0.75px;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.check5 {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: visible;
+}
+.i-agree-to-the-terms-and-conditions {
+  text-align: left;
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  position: relative;
+}
+.i-agree-to-the-terms-and-conditions-span {
+  color: var(--foundation-gray-gray-500, #1e1e1e);
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+}
+.i-agree-to-the-terms-and-conditions-span2 {
+  color: var(--itsa-primary-color, #2a66b0);
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+.button {
+  background: var(--itsa-primary-color, #2a66b0);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 44px;
+  min-height: 44px;
+  position: relative;
+  outline: none;
+  border: none;
+}
+.button-sample {
+  color: var(--color-white, #ffffff);
+  text-align: left;
+  font-family: var(--button-texr-font-family, "Nunito-Bold", sans-serif);
+  font-size: var(--button-texr-font-size, 14px);
+  line-height: var(--button-texr-line-height, 16px);
+  font-weight: var(--button-texr-font-weight, 700);
+  position: relative;
+ 
+}
+.social-login {
+  margin: -7px 0 0 0;
+  padding: 10px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.sign-in-with-socials {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
+}
+.or {
+  color: var(--foundation-gray-gray-800, #212121);
+  text-align: center;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  position: relative;
+}
+.frame-427319248 {
+  background: #e1e7fc;
+  border-radius: 8px;
+  padding: 14px 126px 14px 126px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  height: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.google-png-0 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+.google-png-02 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0%;
+  left: 0%;
+  bottom: 0%;
+  top: 0%;
+  object-fit: cover;
+}
+.sign-up-with-google {
+  color: #2a66b0;
+  text-align: left;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 14px;
+  line-height: 13.8px;
+  letter-spacing: -0.06em;
+  font-weight: 600;
+  position: relative;
+}
+.don-t-have-an-account-login {
+  text-align: center;
+  font-family: "-", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  position: relative;
+}
+.don-t-have-an-account-login-span {
+  color: var(--foundation-gray-gray-800, #212121);
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+.don-t-have-an-account-login-span2 {
+  color: var(--foundation-blue-blue-400, #5585c0);
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+.don-t-have-an-account-login-span3 {
+  color: var(--foundation-blue-blue-400, #5585c0);
+  font-family: "Montserrat-Bold", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 700;
+}
+.itsa-logo {
+  width: 184.47px;
+  height: 57.03px;
+  position: absolute;
+  left: 50px;
+  top: 36px;
+}
+.i-tsda-logo-1 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0%;
+  left: 0%;
+  bottom: 0%;
+  top: 0%;
+  object-fit: cover;
+}
+.printed-circuit-board-rafiki {
+  height: auto;
+  position: relative;
+  left: 0px;
+  top: 165.26px;
+  overflow: visible;
+}
+.paragraph {
+  color: #000000;
+  text-align: left;
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 50px;
+  top: 755px;
+  width: 499px;
+}
+.welcome {
+  color: #000000;
+  text-align: left;
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 38.96666717529297px;
+  line-height: 66.8px;
+  font-weight: 400;
+  position: absolute;
+  left: 88px;
+  top: 100px;
+}
+
+
+
+.checkbox {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+}
+
+.checkbox img {
+  display: none;
+}
+
+.checkbox.checked img {
+  display: block;
+}
+
+.component-16 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.component-16 img {
+  display: none;
+  margin-left: 2px;
+}
+
+.component-16.active img {
+  display: block;
+}
+
+.at-least-8-characters-long,
+.at-least-8-characters-long2,
+.at-least-8-characters-long-span2 {
+  margin-left: 3px;
+}
+
+/* Hide the password strength indicators initially */
+.frame-1000006009 {
+  display: none;
+}
+
+/* Show the password strength indicators when password input is focused or being typed */
+.frame-1000006009.active {
+  display: block;
+}
+
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .sign-up {
+    display: flex;
+    flex-direction: column;
+    left: 10px;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  /* .close {
+    width: 1px;
+  } */
+
+  .sign-up2 {
+    height: fit-content;
+    left: 60px;
+    /* justify-content: center; */
+    top: 200px;
+  }
+
+  .printed-circuit-board-rafiki{
+    position: relative;
+    top: 1200px;
+  }
+
+
+  .paragraph {
+    top: 1800px;
+  }
+
+}
+
+
+@media (max-width: 1024px) {
+  .sign-up {
+    display: flex;
+    flex-direction: column;
+    left: 10px;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  /* .close {
+    width: 1px;
+  } */
+
+  .sign-up2 {
+    height: fit-content;
+    left: 50px;
+    justify-content: center;
+    top: 100px;
+  }
+
+  .printed-circuit-board-rafiki{
+    position: relative;
+    top: 1200px;
+  }
+
+
+  .paragraph {
+    top: 1800px;
+    padding-bottom: 50px;
+  }
+
+}

@@ -1,0 +1,29 @@
+.tab-navigation {
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 14px;
+    color: #333;
+    left: 20px;
+  }
+  
+  .tab-item {
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 10px 0;
+    transition: color 0.3s;
+  }
+  
+  .tab-item.active {
+    color: #1a73e8; /* Blue color for active tab */
+  }
+  
+  .underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 80px; /* Width of the underline matching the tab width */
+    background-color: #1a73e8; /* Blue color for the underline */
+    transition: left 0.3s;
+  }
+  

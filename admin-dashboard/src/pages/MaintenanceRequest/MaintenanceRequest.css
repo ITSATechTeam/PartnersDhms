@@ -1,0 +1,108 @@
+/* Existing styles remain the same ... */
+
+.maintenance-wrapper {
+  width: 1000px;
+}
+
+.maintenance-request {
+  margin: 20px;
+  background-color: #fff;
+  padding: 20px;
+  width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.maintenance-text {
+  padding-left: 20px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Custom status badge styling */
+.status-badge {
+  display: inline-block;
+  width: 63px;
+  height: 24px;
+  line-height: 24px;
+  padding: 2px 5px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Status colors */
+.status-badge.pending {
+  background-color: rgba(255, 243, 210, 1);
+  color: rgba(235, 122, 18, 1);
+}
+
+.status-badge.completed {
+  background-color: rgba(211, 252, 197, 1);
+  color: rgba(0, 191, 53, 1);
+}
+
+.status-badge.in-progress {
+  background-color: rgba(241, 253, 255, 1);
+  color: rgba(42, 102, 176, 1);
+}
+
+.status-badge.declined {
+  background-color: rgba(255, 210, 210, 1);
+  color: rgba(233, 18, 18, 1);
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Adjusted styles for the DataGrid to prevent scroll bars */
+.MuiDataGrid-root {
+  border: 0;
+  overflow: hidden !important;
+}
+
+.MuiDataGrid-main {
+  overflow: hidden !important; /* Ensure no scrollbars */
+}
+
+.MuiDataGrid-virtualScroller {
+  overflow: hidden !important;
+  padding-right: 0 !important; /* Remove any padding that could cause overflow */
+}
+
+/* Forcefully hide any scrollbars */
+.MuiDataGrid-virtualScroller::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  display: none; /* Hide scrollbar for Webkit browsers */
+}
+
+.MuiDataGrid-virtualScroller {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+/* Additional row styling for better alignment */
+.MuiDataGrid-row {
+  height: 52px;
+  display: flex;
+  align-items: center;
+}
+
+.MuiDataGrid-cell {
+  display: flex;
+  align-items: center;
+}
+
+/* Hide horizontal scrollbar container */
+.MuiDataGrid-root .MuiDataGrid-scrollArea {
+  display: none;
+}

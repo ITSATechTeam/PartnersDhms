@@ -1,0 +1,47 @@
+/* Container styling */
+.date-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px; /* Adjusted border-radius for rounder edges */
+  background-color: #f0f0f0; /* Lighter gray for background */
+  padding: 5px 10px;
+  width: 80px; /* Adjust width to match image */
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Icon styling */
+.calendar-icon {
+  margin-right: 5px; /* Adjust space between icon and dropdown */
+  color: #7a7a7a; /* Lighter gray for icon */
+  font-size: 18px; /* Slightly smaller icon */
+}
+
+/* Dropdown styling */
+select {
+  font-size: 14px;
+  border: none;
+  background-color: transparent; /* Transparent background to match the container */
+  outline: none; /* Remove default outline */
+  color: #7a7a7a; /* Lighter gray for text */
+  appearance: none; /* Remove default dropdown arrow */
+  cursor: pointer;
+  padding: 2px;
+}
+
+/* Add a custom arrow using CSS */
+select::-ms-expand {
+  display: none; /* Hide the default arrow in IE */
+}
+
+select::after {
+  content: '▼'; /* Custom arrow */
+  color: #7a7a7a;
+  position: absolute;
+  right: 10px;
+}
+
+/* Optional: You can add hover effects */
+.date-input-container:hover {
+  background-color: #e9e9e9;
+}
