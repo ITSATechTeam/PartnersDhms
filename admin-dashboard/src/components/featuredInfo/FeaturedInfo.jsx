@@ -48,8 +48,8 @@
 //   );
 // }
 
-
 import React, { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import ArticleIcon from '@mui/icons-material/Article';
 import './featuredInfo.css';
 
@@ -61,18 +61,20 @@ export default function FeaturedInfo() {
     completedRequests: 0,
   });
   const [errorMessage, setErrorMessage] = useState(null);
+  const [username, setUsername] = useState(''); // State for the logged-in user's name
 
+  // Fetch counts data from API
   const fetchData = async () => {
     try {
+      const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyODk0MTUwLCJpYXQiOjE3MzI4OTA1NTAsImp0aSI6IjA2YzhjMjk3NzI0YzQ0ODA5ZDQwZDMzNjY5ZmM4ZmRmIiwidXNlcl9pZCI6MjIwfQ.S9PRwveEOHdgt1_Tlc2nGqWQxxOYL_WGWqrl8zVLS4U`; // Replace with your actual JWT token
       const response = await fetch('/api/getmaintenancerequestscount', {
         method: 'GET',
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMTIwNTQwLCJpYXQiOjE3MzIxMTY5NDAsImp0aSI6ImY3M2MzOGQyZjAwMTRlNWM4N2U1ZWE4YWRkNWFjNzNmIiwidXNlcl9pZCI6NDA1LCJ1c2VybmFtZSI6InVzZXJAZXhhbXBsZS5jb20iLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20ifQ.7VnzYkItr4c576htE0AA1Kevr-huMMiEGMwwM4IoTOQ`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
 
-      // Check if response is ok, else throw error with response message
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'An unexpected error occurred.');
@@ -80,34 +82,43 @@ export default function FeaturedInfo() {
 
       const data = await response.json();
 
-      // Set data if the response is successful
       setCounts({
         totalRequests: data.totalRequests || 0,
         pendingRequests: data.pendingRequests || 0,
         declinedRequests: data.declinedRequests || 0,
         completedRequests: data.completedRequests || 0,
       });
-      setErrorMessage(null); // Reset error message on success
-
+      setErrorMessage(null);
     } catch (error) {
-      // Set error message to display in UI
       setErrorMessage(error.message || 'Failed to fetch data');
     }
   };
 
+  // Decode JWT to get the logged-in user's name
   useEffect(() => {
+    const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyODk0MTUwLCJpYXQiOjE3MzI4OTA1NTAsImp0aSI6IjA2YzhjMjk3NzI0YzQ0ODA5ZDQwZDMzNjY5ZmM4ZmRmIiwidXNlcl9pZCI6MjIwfQ.S9PRwveEOHdgt1_Tlc2nGqWQxxOYL_WGWqrl8zVLS4U`; // Replace with your actual JWT token
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        
+        setUsername(decodedToken.username || 'User');
+      } catch (error) {
+        console.error('Invalid token:', error);
+        setUsername('User');
+      }
+    }
     fetchData();
   }, []);
 
   return (
-    <div className='top'>
-      <h1>Hello Jude Uche, Welcome!</h1>
-      <h2 className='overview'>Overview</h2>
+    <div className="top">
+      <h1>Hello {username}, Welcome!</h1> {/* Dynamic username */}
+      <h2 className="overview">Overview</h2>
       {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message if exists */}
       <div className="featured">
         <div className="featuredItem">
           <div className="featuredContent">
-            <ArticleIcon className='icon first' />
+            <ArticleIcon className="icon first" />
             <div className="info">
               <span className="count">{counts.totalRequests}</span>
               <span className="label">Total Requests</span>
@@ -116,7 +127,7 @@ export default function FeaturedInfo() {
         </div>
         <div className="featuredItem">
           <div className="featuredContent">
-            <ArticleIcon className='icon second' />
+            <ArticleIcon className="icon second" />
             <div className="info">
               <span className="count">{counts.pendingRequests}</span>
               <span className="label">Pending Requests</span>
@@ -125,7 +136,7 @@ export default function FeaturedInfo() {
         </div>
         <div className="featuredItem">
           <div className="featuredContent">
-            <ArticleIcon className='icon third' />
+            <ArticleIcon className="icon third" />
             <div className="info">
               <span className="count">{counts.declinedRequests}</span>
               <span className="label">Declined Requests</span>
@@ -134,7 +145,7 @@ export default function FeaturedInfo() {
         </div>
         <div className="featuredItem">
           <div className="featuredContent">
-            <ArticleIcon className='icon fourth' />
+            <ArticleIcon className="icon fourth" />
             <div className="info">
               <span className="count">{counts.completedRequests}</span>
               <span className="label">Completed Requests</span>

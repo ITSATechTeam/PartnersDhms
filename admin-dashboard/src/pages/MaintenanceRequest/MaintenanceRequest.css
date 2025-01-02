@@ -1,14 +1,14 @@
 /* Existing styles remain the same ... */
 
 .maintenance-wrapper {
-  width: 1000px;
+  width: 100%;
 }
 
 .maintenance-request {
   margin: 20px;
   background-color: #fff;
   padding: 20px;
-  width: 90%;
+  width: 10%;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -105,4 +105,78 @@
 /* Hide horizontal scrollbar container */
 .MuiDataGrid-root .MuiDataGrid-scrollArea {
   display: none;
+}
+
+
+/* Media queries for responsiveness */
+
+/* Tablets (768px and above) */
+@media (max-width: 1024px) {
+  .maintenance-request {
+    padding: 15px;
+  }
+
+  .MuiDataGrid-cell {
+    font-size: 11px;
+  }
+
+  .status-badge {
+    font-size: 9px;
+  }
+}
+
+/* Mobile devices (up to 768px) */
+@media (max-width: 768px) {
+  .maintenance-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .maintenance-request {
+    padding: 10px;
+    margin: 10px auto;
+    width: 50%;
+  }
+
+  .MuiDataGrid-row {
+    flex-direction: column;
+    height: auto;
+    
+  }
+
+  .MuiDataGrid-cell {
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .status-badge {
+    font-size: 8px;
+    padding: 2px 5px;
+  }
+}
+
+/* Small mobile devices (up to 480px) */
+@media (max-width: 480px) {
+  .maintenance-wrapper {
+    padding: 10px;
+    width: 20px;
+  }
+
+  .maintenance-text h2 {
+    font-size: 1rem;
+  }
+
+  .maintenance-request {
+    padding: 5px;
+    margin: 5px auto;
+    width: 5%;
+  }
+
+  .MuiDataGrid-cell {
+    font-size: 9px;
+  }
+
+  .status-badge {
+    font-size: 7px;
+    padding: 1px 4px;
+  }
 }

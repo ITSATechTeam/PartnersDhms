@@ -287,10 +287,10 @@ const MaintenanceRequest = () => {
 
   const fetchAllMaintenanceRequests = async () => {
     const endpoints = {
-      pending: `/api/getpendingmaintenancereqs`,
-      completed: `/api/getcompletedmaintenancereqs`,
-      ongoing: `/api/getongoingmaintenancereqs`,
-      declined: `/api/getdeclineddmaintenancereqs`
+      pending: `https://dhms.itservicedeskafrica.com/api/getpendingmaintenancereqs`,
+      completed: `https://dhms.itservicedeskafrica.com/api/getcompletedmaintenancereqs`,
+      ongoing: `https://dhms.itservicedeskafrica.com/api/getongoingmaintenancereqs`,
+      declined: `https://dhms.itservicedeskafrica.com/api/getdeclineddmaintenancereqs`
     };
 
     try {
@@ -406,7 +406,14 @@ const MaintenanceRequest = () => {
       <div className='maintenance-request'>
         <FilterBar />
         <TabNavigation />
-        <Paper sx={{ width: '100%', marginTop: 2, boxShadow: 'none' }}>
+        <Paper sx={{ 
+    width: '90%', 
+    marginTop: 2, 
+    boxShadow: 'none', 
+    padding: { xs: 1, sm: 2, md: 3 }, // Adjust padding for screen sizes
+    borderRadius: { xs: 1, sm: 2, md: 3 }, // Adjust border-radius for smaller screens
+    backgroundColor: { xs: '#f9f9f9', sm: '#fff' }, // Optional: Different background for mobile
+  }}>
           <DataGrid
             rows={maintenanceRows}
             columns={columns}

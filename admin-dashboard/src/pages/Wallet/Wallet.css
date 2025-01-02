@@ -271,3 +271,76 @@ td {
 .send-button:hover {
   background-color: #0056b3;
 }
+
+
+/* Responsive Media Queries */
+@media (max-width: 768px) { /* Tablet screens */
+
+ 
+  .wallet-section {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items */
+    width: 115%;
+    padding: 20px;
+    gap: 10px;
+  }
+
+  .wallet-balance,
+  .wallets {
+    width: 90%; /* Full width */
+  }
+
+  .wallet-actions {
+    gap: 10px; /* Reduce gap between actions */
+  }
+
+  .recent-transactions {
+    margin-left: 0; /* Remove extra margin */
+  }
+
+  .transaction-history {
+   width: 105%;
+   margin-left: 12px;
+  }
+
+  .transaction-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling */
+  }
+
+  .transaction-table table {
+    min-width: 500px; /* Set a minimum width */
+  }
+
+}
+
+@media (max-width: 480px) { /* Mobile screens */
+  h2 {
+    font-size: 20px; /* Adjust heading size */
+  }
+
+  p {
+    font-size: 12px; /* Reduce paragraph font size */
+  }
+
+  .wallet-balance,
+  .wallets {
+    padding: 15px; /* Reduce padding */
+  }
+
+  .wallet-actions {
+    flex-direction: column; /* Stack buttons vertically */
+  }
+
+  .wallet-button {
+    font-size: 12px; /* Reduce button font size */
+    padding: 8px 10px; /* Adjust padding */
+  }
+
+  table th,
+  table td {
+    font-size: 12px; /* Reduce table font size */
+  }
+}
+

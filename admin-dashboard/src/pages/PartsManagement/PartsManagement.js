@@ -103,7 +103,14 @@ const Parts = () => {
       </div>
       <div className='maintenance-request'>
         <FilterBar />
-        <Paper sx={{ width: '100%', marginTop: 2, boxShadow: 'none' }}>
+        <Paper sx={{ 
+    width: '100%', 
+    marginTop: 2, 
+    boxShadow: 'none',
+    padding: { xs: 1, sm: 2, md: 3 }, // Adjust padding based on screen size
+    overflowX: { xs: 'auto', sm: 'hidden' }, // Enable horizontal scrolling on small screens
+    margin: { xs: 1, sm: 1 }, // Adjust margin for mobile and tablet views
+  }}>
           <DataGrid
             rows={partsRows}
             columns={columns}

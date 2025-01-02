@@ -8,6 +8,7 @@ import image from "../../img/printed-circuit-board-rafiki0.svg";
 import image1 from "../../img/i-tsda-logo-10.png";
 import image2 from "../../img/check0.svg";
 import image3 from "../../img/fi-eye-off0.svg";
+import apiClient from "../../utils/api";
 
 export default function Signup() {
   // Initialize the navigate function
@@ -22,6 +23,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [checkmark, setCheckmark] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [passwordCriteria, setPasswordCriteria] = useState({
     min8Chars: false,
     hasUppercase: false,
@@ -124,8 +126,7 @@ export default function Signup() {
   // Handle form submission
   const createAccount = async (e) => {
     e.preventDefault();
-
-    // Basic validation to prevent sending null or empty fields
+  
     if (
       !technicianName ||
       !technicianEmail ||
@@ -141,72 +142,67 @@ export default function Signup() {
       });
       return;
     }
-
+  
+    const technicianData = {
+      technicianEmail,            // From useState
+      technicianName,             // From useState
+      technicianPhoneNumber,      // From useState
+      technicianAvailability,     // From useState
+      technicianLocation,         // From useState
+      password,                   // From useState
+    };
+    
+  
+    setLoader(true);
+  
     try {
-      // Send all fields, even if some are optional
-      const response = await axios.post("/api/registertechnician", {
-        technicianEmail: "u@example.com",
-        technicianName: "string",
-        technicianPhoneNumber: "07066128900",
-        technicianAvailability: "Ful_lTime",
-        technicianLocation: "string",
-        password: "string",
-      });
-
-      if (response.status === 200) {
-        const { message } = response.data;
-
-        if (message === "Technical partner profile created successfull.") {
-          setSnackbar({
-            open: true,
-            message: "Technical partner profile created successfully.",
-            severity: "success",
-          });
-          setTimeout(() => navigate("/"), 1500);
-        } else {
-          console.error("API response:", response.data);
-          setSnackbar({
-            open: true,
-            message:
-              "Account creation failed! Please check your input or try again later.",
-            severity: "error",
-          });
+      const response = await apiClient.post("/registertechnician", technicianData);
+  
+      if (response.data.status === "success") {
+        const token = response.data.token;
+        if (token) {
+          localStorage.setItem("authToken", token);
         }
+  
+        setSnackbar({
+          open: true,
+          message: "Technical partner profile created successfully!",
+          severity: "success",
+        });
+        setTimeout(() => {
+          navigate("/"); // Navigate to another page after success
+        }, 1500);
+      } else {
+        setSnackbar({
+          open: true,
+          message: response.data.message || "Account creation failed!",
+          severity: "error",
+        });
       }
     } catch (error) {
-      let errorMessage = "An unexpected error occurred.";
-      if (error.response && error.response.data) {
-        // Check for specific error messages based on API response
-        const errorData = error.response.data.error_message;
-        if (errorData) {
-          // Prioritize messages from the backend response if available
-          if (errorData.required) {
-            errorMessage = "A required field is missing.";
-          } else if (errorData.null) {
-            errorMessage = "A field cannot be null.";
-          } else if (errorData.invalid) {
-            errorMessage = `Invalid data provided: ${errorData.invalid.replace(
-              "{datatype}",
-              typeof errorData.invalid
-            )}`;
-          } else {
-            errorMessage =
-              error.response.data.message || "Account creation failed!";
-          }
-        } else {
-          errorMessage =
-            error.response.data.message || "Account creation failed!";
-        }
-      } else if (error.request) {
-        errorMessage = "No response from the server. Please try again later.";
+      if (error.response && error.response.status === 400) {
+        const errorMessage = error.response.data.error_message;
+        const formattedError = Object.keys(errorMessage)
+          .map((key) => `${key}: ${errorMessage[key]}`)
+          .join("\n");
+  
+        setSnackbar({
+          open: true,
+          message: `Validation Error:\n${formattedError}`,
+          severity: "error",
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: "An unexpected error occurred. Please try again.",
+          severity: "error",
+        });
       }
-      setSnackbar({
-        open: true,
-        message: errorMessage,
-        severity: "error",
-      });
+    } finally {
+      setLoader(false);
     }
   };
+  
 
   // Handle Snackbar close
   const handleCloseSnackbar = () => {

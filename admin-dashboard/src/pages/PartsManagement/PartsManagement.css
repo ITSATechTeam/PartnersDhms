@@ -67,4 +67,41 @@
   }
   
   
+  @media (max-width: 768px) {
+    .maintenance-text h2 {
+      font-size: 1.2rem;
+    }
+  
+    .maintenance-text p {
+      font-size: 0.9rem;
+    }
+  
+    .MuiDataGrid-root .MuiDataGrid-columnHeader {
+      font-size: 0.8rem;
+    }
+  
+    .MuiDataGrid-cell {
+      font-size: 0.8rem;
+      padding: 4px;
+    }
+
+    .maintenance-request {
+      width: 28%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .maintenance-wrapper {
+      padding: 10px;
+    }
+  
+    .MuiDataGrid-root .MuiDataGrid-columnHeader {
+      font-size: 0.7rem;
+    }
+  
+    .MuiDataGrid-cell {
+      font-size: 0.7rem;
+      padding: 2px;
+    }
+  }
   

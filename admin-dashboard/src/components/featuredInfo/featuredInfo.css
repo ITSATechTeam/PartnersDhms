@@ -10,7 +10,7 @@
   font-weight: 500;
   color: #2b2b2b;
   margin-bottom: 20px;
-  margin-right: 535px;
+ 
 }
 
 .overview {
@@ -104,7 +104,11 @@
 @media only screen and (max-width: 768px) {
   .top h1 {
     font-size: 22px;
-    margin-right: 0;
+    left: 300px;
+  }
+
+  .tops {
+    margin-right: 300px;
   }
 
   .overview {
@@ -170,7 +174,8 @@
   }
 
   .featuredItem {
-    width: 30%; /* Full width for mobile */
+    width: 110%; /* Full width for mobile */
+    margin-right: 25px;
     
   }
 }

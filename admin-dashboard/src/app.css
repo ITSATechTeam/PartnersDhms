@@ -39,3 +39,57 @@ body {
         transform: translateY(0); /* Reset position */
     }
 }
+
+
+
+
+
+/* Adjust for tablets and smaller screens */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column; /* Stack items vertically */
+    }
+
+    .Rightbars {
+        margin-left: 0; /* Reset margin */
+        margin-top: 20px; /* Add some space above */
+        align-self: center; /* Center Rightbars */
+        width: 100%; /* Take full width on smaller screens */
+        gap: 15px; /* Adjust spacing */
+    }
+}
+
+/* Adjust for mobile devices */
+@media (max-width: 768px) {
+    .Rightbars {
+        margin-top: 0px; /* Add more spacing above */
+        padding: 10px; /* Add some padding */
+        align-self: center; /* Center Rightbars */
+        width: 90%; /* Take full width on smaller screens */
+        gap: 15px; /* Adjust spacing */
+        margin-left: 150px;
+    }
+
+    .contentWrapper {
+        width: 100%; /* Allow main content to take full width */
+        margin-bottom: 0;
+    }
+    .container{
+        width: 28%;
+        height: fit-content;
+    }
+}
+
+@media (max-width: 1024px) {
+    .contentWrapper {
+        width: 100%; /* Full width for tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .contentWrapper {
+        width: 300%; /* Full width for mobile */
+        flex-direction: column; /* Stack the content vertically */
+      
+    }
+}

@@ -4,7 +4,7 @@
   margin-right: 10px;
   height: 35vh;
   margin-left: -80px;
-  margin-top: 113px;
+  margin-top: 130px;
   border-radius: 10px;
 }
 h5 {
@@ -63,4 +63,18 @@ h1 {
 .speed-icon {
   font-size: 36px; /* Adjust the size of the icon */
   color: rgba(42, 102, 176, 1); /* Adjust the color to match your theme */
+}
+
+
+@media only screen and (max-width: 768px) {
+  .progressBar {
+    margin-top: 0;
+  }
+
+  h5 {
+    margin-right: 200px;
+    color: darkgray;
+    margin-left: 0;
+    font-size: 14px;
+  }
 }

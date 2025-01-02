@@ -3,78 +3,114 @@
   align-items: center;
   margin: 20px 0;
   justify-content: space-between; /* Distribute space between elements */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .filter-search {
   padding: 10px;
-  width: 300px;
+  width: 100%; /* Full width for small screens */
+  max-width: 300px; /* Limit width on larger screens */
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-right: 10px; /* Maintain some margin between search and filter */
+  margin-bottom: 10px; /* Add spacing for stacked layout on small screens */
 }
 
 .filter-icon-container {
   display: flex;
-  align-items: center; /* Center align items in the container */
+  align-items: center;
   cursor: pointer;
-  padding: 5px 10px; /* Add horizontal padding for better click area */
+  padding: 5px 10px;
   border: 1px solid rgba(195, 195, 195, 1);
-  margin-right: 640px;/* Reduced margin to bring it closer to the search input */
+  border-radius: 5px;
+  margin: 10px 0; /* Add margin for better spacing */
 }
 
 .filter-icon {
   color: #808080;
-  font-size: 28px;
+  font-size: 24px; /* Adjust icon size for smaller screens */
   margin-right: 5px;
 }
 
 .filter-text {
-  font-size: 16px;
+  font-size: 14px; /* Adjust font size for better readability */
   color: #808080;
 }
 
 .filter-options {
-  position: absolute; /* Position it absolutely to appear above other elements */
-  background-color: white; /* Set background to make options visible */
-  border: 1px solid #ddd; /* Add a border for distinction */
-  border-radius: 5px; /* Rounded corners */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-  z-index: 1000; /* Ensure it appears on top */
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 100%; /* Ensure options take up full width on smaller screens */
+  max-width: 300px; /* Limit width on larger screens */
 }
 
 .filter-options button {
-  padding: 10px; /* Add padding for button spacing */
-  border: none; /* Remove default button borders */
-  background: none; /* Remove background */
-  cursor: pointer; /* Pointer cursor for buttons */
-  color: #808080; /* Match the color with other text elements */
-  width: 100%; /* Make buttons fill the width */
-  text-align: left; /* Align text to the left */
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #808080;
+  width: 100%;
+  text-align: left;
 }
 
 .filter-options button:hover {
-  background-color: #f0f0f0; /* Highlight on hover */
+  background-color: #f0f0f0;
 }
 
 .export-button {
   display: flex;
   align-items: center;
-  padding: 5px 10px; /* Add horizontal padding for better click area */
+  padding: 5px 10px;
   background-color: white;
   border: 1px solid rgba(195, 195, 195, 1);
   border-radius: 5px;
   cursor: pointer;
+  margin: 10px 0; /* Add margin for stacked layout on smaller screens */
 }
 
 .export-icon {
   color: #808080;
-  font-size: 28px;
+  font-size: 24px; /* Adjust icon size */
   margin-right: 5px;
 }
 
 .export-text {
-  font-size: 16px;
+  font-size: 14px; /* Adjust font size */
   color: #808080;
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) { /* Tablet and smaller screens */
+  .filter-bar {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align to the start */
+  }
 
+  .filter-search {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .filter-icon-container,
+  .export-button {
+    width: 100%; /* Full width for filter options and export button */
+    justify-content: center; /* Center items */
+  }
+}
+
+@media (max-width: 480px) { /* Mobile screens */
+  .filter-icon {
+    font-size: 20px; /* Reduce icon size for smaller screens */
+  }
+
+  .filter-text, .export-text {
+    font-size: 12px; /* Smaller text for mobile */
+  }
+
+  .filter-options {
+    font-size: 14px; /* Adjust options text size */
+  }
+}

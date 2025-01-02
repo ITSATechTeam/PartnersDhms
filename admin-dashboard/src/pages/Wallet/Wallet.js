@@ -230,7 +230,7 @@ const Wallet = () => {
           setFilterStatus={setFilterStatus}
         />
 
-          <table>
+          <table className="table1">
             <thead>
               <tr>
                 <th>

@@ -1,24 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
-
+/* Default sidebar styles for desktop */
 .sidebar {
   margin-top: 0;
-  width: 250px; /* Default sidebar width for desktop */
+  width: 250px;
   flex: 1;
   height: calc(100vh - 0px);
   background: rgb(251, 251, 255);
   position: sticky;
   top: 0;
   font-family: 'Nunito', sans-serif;
-  transition: width 0.3s ease; /* Smooth transition for width changes */
+  transition: width 0.3s ease, background 0.3s ease;
 }
 
 .sidebarWrapper {
   padding: 20px;
   color: #555;
-}
-
-.sidebarMenu {
-  margin-bottom: 20px;
 }
 
 .sidebarList {
@@ -60,8 +55,6 @@
 .sidebarIcon {
   margin-right: 20px;
   font-size: 18px;
-  font-weight: 400;
-  line-height: 21.82px;
 }
 
 .logOut {
@@ -71,24 +64,45 @@
 }
 
 .menuButton {
-  position: relative;
-  top: 10px;
-  left: 10px;
-  z-index: 1000; /* Ensure button is on top */
-  display: none; /* Initially hidden, shown only on mobile */
+  position: fixed;
+  top: px;
+  left: 6px;
+  z-index: 1001; /* Ensure the button is above the sidebar */
+  display: none; /* Initially hidden, shown only on mobile and tablet */
+  background: rgb(163, 196, 236);
+  color: white;
+  border: none;
+  padding: 4px;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
 
 /* MEDIA QUERIES */
 
 /* For tablets (landscape and portrait) */
 @media only screen and (max-width: 768px) {
+  .menuButton {
+    display: block;
+  }
+
   .sidebar {
-    width: 180px; /* Reduce the sidebar width on tablets */
+    width: 0; /* Hide sidebar by default */
+    height: 100%;
+    background: rgba(42, 102, 176, 1); /* Transparent background */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Place on top of content */
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+  }
+
+  .sidebar.open {
+    width: 250px; /* Sidebar slides in */
   }
 
   .sidebarWrapper {
-    padding: 15px; /* Reduce padding */
+    padding: 15px;
   }
 
   .sidebarListItem {
@@ -97,68 +111,51 @@
   }
 
   .sidebarIcon {
-    margin-right: 15px; /* Adjust icon margin */
+    margin-right: 15px;
     font-size: 16px;
   }
-
-
-  
-
-
 }
-
-
 
 /* For mobile devices */
 @media only screen and (max-width: 480px) {
   .sidebar {
-    width: 60px; /* Minimize the sidebar width on mobile */
-    overflow-x:visible; /* Hide content that exceeds the width */
-    z-index: 1000;
+    width: 0%; /* Hidden by default */
+    height: 26%;
+    background: rgb(163, 187, 219); /* Transparent background */
+    border-radius: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Place on top of content */
+    overflow-x: hidden;
+    transition: width 0.3s ease, background 0.3s ease;
+  }
+
+  .sidebar.open {
+    width: 360px; /* Sidebar slides in when open */
   }
 
   .sidebarWrapper {
-    padding: 10px; /* Reduce padding for mobile */
+    padding: 10px;
   }
 
   .sidebarListItem {
-    justify-content: center; /* Center the items */
+    justify-content: center;
     padding: 10px;
-    font-size: 12px;
+    font-size: 20px;
   }
 
   .sidebarIcon {
-    margin-right: 0; /* Remove margin on mobile */
+    margin-right: 0;
     font-size: 14px;
   }
 
   .sidebarListItem.active {
     border-right: none;
-    border-bottom: 2px solid rgba(42, 102, 176, 1); /* Adjust the border for mobile */
-  }
-
-  .sidebarListItem:hover {
-    background: #f8f8f8;
+    border-bottom: 2px solid rgba(42, 102, 176, 1);
   }
 
   .logOut {
     padding-top: 10px;
-  }
-}
-
-/* HIDE SIDEBAR ON MOBILE (can be toggled by a button if needed) */
-@media only screen and (max-width: 480px) {
-  .sidebar {
-    display: none; /* Hidden by default */
-  }
-
-  .sidebar.open {
-    display: block; /* Show sidebar when a toggle button is pressed */
-    width: 250px; /* Full width when open */
-  }
-
-  .menuButton {
-    display: block; /* Ensure it's also shown on smaller mobile screens */
-    
   }
 }

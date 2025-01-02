@@ -5,16 +5,19 @@
   } */
   
   body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Nunito', sans-serif;
   }
   
   .account-settings-container {
-    width: 600px;
+    width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     background-color: #fff;
+    justify-content: center;
+    align-content: center;
+    margin-left: 170px;
   }
 
   .nav-links {
@@ -80,6 +83,7 @@
   .input-group {
     display: flex;
     flex-direction: column;
+    padding: 10px;
   }
   
   .input-group label {

@@ -43,6 +43,7 @@
     .chart {
         padding: 15px;
         max-width: 100%; /* Make sure it takes full width on tablets */
+        width: 70%
     }
     
     .chartTitle {
@@ -59,8 +60,11 @@
 @media only screen and (max-width: 480px) {
     .chart {
         padding: 10px;
-        max-width: 50%; /* Full width on mobile */
-        margin-right: 1000px;
+        width: 100%; /* Full width on mobile */
+        margin-left: 18px;
+        justify-content: center;
+        align-content: center;
+        
     }
     
     .chartTitle {

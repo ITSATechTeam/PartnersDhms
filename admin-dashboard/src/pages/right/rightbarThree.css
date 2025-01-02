@@ -2,13 +2,13 @@
 
 .task-compl {
   background: rgb(251, 251, 255);
-  height: 34%;
+  height: 33.1%;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: "Nunito", sans-serif;
   margin-right: 10px;
-  margin-top: 23px;
+  margin-top: 20px;
   margin-left: -80px;
   padding: 10px;
 }
@@ -37,9 +37,9 @@
 .task-item {
   background: #fff;
   border: 1px solid #f0f0f0;
-  padding: 10px;
+  padding: 5.7px;
   border-radius: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .task-comp {

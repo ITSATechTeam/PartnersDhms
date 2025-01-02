@@ -14,7 +14,7 @@ function Rightbar() {
   useEffect(() => {
     const fetchPercentageData = async () => {
       try {
-        const response = await fetch('/api/getmaintenancetyperate', {
+        const response = await fetch('https://dhms.itservicedeskafrica.com/api/getmaintenancetyperate', {
           method: 'GET',
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMTE2MjQ3LCJpYXQiOjE3MzIxMTI2NDcsImp0aSI6IjE5MWZjN2ZmMzBjODRkZDI4YjI3N2FjMWYzNDQ4OGVhIiwidXNlcl9pZCI6NDA1LCJ1c2VybmFtZSI6InVzZXJAZXhhbXBsZS5jb20iLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20ifQ.mC3YvJVkAtRGCmaoKlvOcz4WODTo6HuH27ril6tgi3Y`,
