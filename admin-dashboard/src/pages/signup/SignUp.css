@@ -11,21 +11,22 @@ body {
 .sign-up {
   background: #ffffff;
   min-height: 80vh;
-  width: 100vw;
+  width: 90vw;
   display: flex;
   flex-direction: row;
   position: relative;
   margin: 0 auto;
   max-width: 100%;
   overflow: hidden;
+  top: 0;
 }
 
 .sign-up2 {
   background: #f7f7fb;
   width: 100%;
-  min-height: 100vh;
+  min-height: 0vh;
   position: relative;
-  padding: 3rem 2rem;
+  padding: rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -207,11 +208,12 @@ body {
 }
 
 .printed-circuit-board-rafiki {
-  height: auto;
+ height: 70vh;
   position: relative;
   left: 0px;
-  top: 80px;
+  top: 90px;
   overflow: visible;
+  
 }
 
 .i-tsda-logo-1 {
@@ -223,13 +225,15 @@ body {
   top: 0%;
 }
 
-.printed-circuit-board-rafiki {
+
+
+/* .printed-circuit-board-rafiki {
   height: auto;
   position: relative;
   left: 0px;
   top: 90px;
   overflow: visible;
-}
+} */
 
 .paragraph {
   color: #000000;
@@ -240,7 +244,7 @@ body {
   font-weight: 400;
   position: absolute;
   left: 50px;
-  top: 755px;
+  top: 595px;
   width: 499px;
 }
 
