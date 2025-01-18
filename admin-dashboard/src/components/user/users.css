@@ -54,9 +54,9 @@
 @media (max-width: 480px) {
     .userList {
         flex: 1;
-        width: 100%;
+        width: 125%;
  
-        padding-left: 5px;
+        padding-left: 0px;
         font-size: 85%; /* Further reduce font size for mobile */
     }
 
