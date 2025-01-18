@@ -10,80 +10,143 @@ import "./LogIn.css";
 import image from "../../img/process-cuate.png";
 import image1 from "../../img/google-png-0-1.png";
 
+
+
+// Create axios instance with default config
+const api = axios.create({
+ 
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+});
+
+// Add request interceptor for bearer token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const [eyeOff, setEyeOff] = useState(true);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("info");
   const [isLoader, setLoader] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+ const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("info");
+  const [errorMessage, setErrorMessage] = useState("");
+  
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "info"
+  });
+
+  const navigate = useNavigate();
 
   const togglePassword = () => setEyeOff(!eyeOff);
 
-  const handleSnackbarClose = () => setSnackbarOpen(false);
+  const handleSnackbarClose = () => {
+    setSnackbar(prev => ({ ...prev, open: false }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(""); // Clear previous error messages
     setLoader(true);
 
-    try {
-      // Use the correct endpoint based on the environment
-      const baseURL =
-        process.env.NODE_ENV === "development"
-          ? "/api/technicianlogin"
-          : "https://dhms.itservicedeskafrica.com/api/technicianlogin"; // Replace with your production URL
+    // Validation
+    if (!email || !password) {
+      setSnackbar({
+        open: true,
+        message: "Please enter both email and password.",
+        severity: "error"
+      });
+      setLoader(false);
+      return;
+    }
 
-          try {
-            const response = await apiClient.post("/technicianlogin", {
-              technicianEmail: email,
-              password: password,
-            });
-          
-            // Check if the response is successful
-            if (response.status === 200 && response.data.status === 200) {
-              // Extract and save the access token
-              const accessToken = response.data.Token?.access || response.data.token?.access || "";
-              if (accessToken) {
-                localStorage.setItem("accessToken", accessToken);
-              } else {
-                throw new Error("Failed to retrieve access token.");
-              }
-          
-              // Show success message
-              setSnackbarMessage("Login successful!");
-              setSnackbarSeverity("success");
-          
-              // Redirect to the dashboard
-              window.location = "/dashboard";
-            } else {
-              // Handle unsuccessful login
-              throw new Error(
-                response.data.message || "Invalid email or password. Please try again."
-              );
-            }
-          } catch (error) { // Ensure 'error' is defined here
-            // Log the error for debugging
-            console.error("Login error:", error);
-          
-            // Show error message
-            setSnackbarMessage(error.message || "An unexpected error occurred.");
-            setSnackbarSeverity("error");
-          } finally {
-            setLoader(false); // Stop the loader
-          }
-          
-          
-    
-      // setSnackbarMessage(error.response?.data?.message || "Login failed. Please try again.");
-      setSnackbarSeverity("error");
+    try {
+      const response = await api.post(
+        '/api/technicianlogin',
+        {
+          technicianEmail: email,
+          password: password,
+        }
+      );
+
+      if (response.data.status === 200 || response.data.status === "success") {
+        // Handle both possible token formats
+        const tokens = response.data.token || response.data.Token;
+        const access = tokens?.access || tokens?.accessToken;
+        const refresh = tokens?.refresh || tokens?.refreshToken;
+
+        if (access && refresh) {
+          localStorage.setItem("accessToken", access);
+          localStorage.setItem("refreshToken", refresh);
+          api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+
+          setSnackbar({
+            open: true,
+            message: "Login successful!",
+            severity: "success"
+          });
+
+          // Use navigate instead of window.location
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1500);
+        } else {
+          throw new Error("Failed to retrieve authentication tokens.");
+        }
+      } else {
+        throw new Error(response.data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+
+      if (error.response?.status === 401) {
+        setSnackbar({
+          open: true,
+          message: "Invalid email or password.",
+          severity: "error"
+        });
+      } else if (error.response?.status === 400) {
+        const errorMessage = error.response.data.error_message;
+        const formattedError = typeof errorMessage === 'object' 
+          ? Object.keys(errorMessage)
+              .map((key) => `${key}: ${errorMessage[key]}`)
+              .join("\n")
+          : errorMessage;
+
+        setSnackbar({
+          open: true,
+          message: `Validation Error:\n${formattedError}`,
+          severity: "error"
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: error.message || "An unexpected error occurred. Please try again.",
+          severity: "error"
+        });
+      }
     } finally {
       setLoader(false);
       setSnackbarOpen(true);
     }
   };
+          
+    
+      
 
   return (
     <div className="log-in">

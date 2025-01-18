@@ -47,11 +47,69 @@
 //     </div>
 //   );
 // }
-
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import ArticleIcon from '@mui/icons-material/Article';
 import './featuredInfo.css';
+
+// Token management utilities
+const getStoredToken = () => localStorage.getItem('accessToken');
+const setStoredToken = (token) => localStorage.setItem('accessToken', token);
+const getStoredRefreshToken = () => localStorage.getItem('refreshToken');
+
+const refreshAccessToken = async () => {
+  try {
+    const refreshToken = getStoredRefreshToken();
+    if (!refreshToken) throw new Error('No refresh token available');
+
+    const response = await fetch('/api/refreshtoken/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        refresh: refreshToken
+      })
+    });
+
+    if (!response.ok) throw new Error('Token refresh failed');
+
+    const data = await response.json();
+    setStoredToken(data.access);
+    return data.access;
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+    window.location.href = '/';
+    return null;
+  }
+};
+
+const fetchWithToken = async (url, options = {}) => {
+  let token = getStoredToken();
+  if (!token) {
+    console.error('No access token available');
+    window.location.href = '/';
+    return null;
+  }
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...options.headers,
+    'Authorization': `Bearer ${token}`
+  };
+
+  let response = await fetch(url, { ...options, headers });
+
+  if (response.status === 401) {
+    token = await refreshAccessToken();
+    if (!token) return null;
+
+    headers.Authorization = `Bearer ${token}`;
+    response = await fetch(url, { ...options, headers });
+  }
+
+  return response;
+};
 
 export default function FeaturedInfo() {
   const [counts, setCounts] = useState({
@@ -61,27 +119,17 @@ export default function FeaturedInfo() {
     completedRequests: 0,
   });
   const [errorMessage, setErrorMessage] = useState(null);
-  const [username, setUsername] = useState(''); // State for the logged-in user's name
+  const [TechnicianName, setTechnicianName] = useState('');
 
-  // Fetch counts data from API
   const fetchData = async () => {
     try {
-      const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyODk0MTUwLCJpYXQiOjE3MzI4OTA1NTAsImp0aSI6IjA2YzhjMjk3NzI0YzQ0ODA5ZDQwZDMzNjY5ZmM4ZmRmIiwidXNlcl9pZCI6MjIwfQ.S9PRwveEOHdgt1_Tlc2nGqWQxxOYL_WGWqrl8zVLS4U`; // Replace with your actual JWT token
-      const response = await fetch('/api/getmaintenancerequestscount', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'An unexpected error occurred.');
+      const response = await fetchWithToken('/api/getmaintenancerequestscount');
+      
+      if (!response || !response.ok) {
+        throw new Error('Failed to fetch maintenance request counts');
       }
 
       const data = await response.json();
-
       setCounts({
         totalRequests: data.totalRequests || 0,
         pendingRequests: data.pendingRequests || 0,
@@ -94,27 +142,37 @@ export default function FeaturedInfo() {
     }
   };
 
-  // Decode JWT to get the logged-in user's name
-  useEffect(() => {
-    const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyODk0MTUwLCJpYXQiOjE3MzI4OTA1NTAsImp0aSI6IjA2YzhjMjk3NzI0YzQ0ODA5ZDQwZDMzNjY5ZmM4ZmRmIiwidXNlcl9pZCI6MjIwfQ.S9PRwveEOHdgt1_Tlc2nGqWQxxOYL_WGWqrl8zVLS4U`; // Replace with your actual JWT token
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        
-        setUsername(decodedToken.username || 'User');
-      } catch (error) {
-        console.error('Invalid token:', error);
-        setUsername('User');
-      }
+  const getUsernameFromToken = () => {
+    try {
+      const token = getStoredToken();
+      if (!token) throw new Error('No token available');
+
+      const decodedToken = jwtDecode(token);
+      setTechnicianName(decodedToken.username || 'User');
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      setTechnicianName('User');
     }
+  };
+
+  useEffect(() => {
+    getUsernameFromToken();
     fetchData();
+
+    // Set up periodic refresh of data
+    const refreshInterval = setInterval(() => {
+      fetchData();
+      getUsernameFromToken(); // Optionally refresh username if token changes
+    }, 5 * 60 * 1000); // Every 5 minutes
+
+    return () => clearInterval(refreshInterval);
   }, []);
 
   return (
     <div className="top">
-      <h1>Hello {username}, Welcome!</h1> {/* Dynamic username */}
+      <h1>Hello {TechnicianName}, Welcome!</h1>
       <h2 className="overview">Overview</h2>
-      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message if exists */}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <div className="featured">
         <div className="featuredItem">
           <div className="featuredContent">

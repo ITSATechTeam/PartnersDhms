@@ -88,7 +88,7 @@ const RightbarTwo = () => {
   useEffect(() => {
     const fetchProgressData = async () => {
       try {
-        const response = await fetch('https://dhms.itservicedeskafrica.com/api/getmaintenancetyperate', {
+        const response = await fetch('/api/getmaintenancetyperate', {
           method: 'GET',
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyMTIwNTQwLCJpYXQiOjE3MzIxMTY5NDAsImp0aSI6ImY3M2MzOGQyZjAwMTRlNWM4N2U1ZWE4YWRkNWFjNzNmIiwidXNlcl9pZCI6NDA1LCJ1c2VybmFtZSI6InVzZXJAZXhhbXBsZS5jb20iLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20ifQ.7VnzYkItr4c576htE0AA1Kevr-huMMiEGMwwM4IoTOQ`,

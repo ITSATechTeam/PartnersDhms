@@ -1,5 +1,5 @@
 .maintenance-wrapper {
-    width: 1000px;
+    width: 100%;
   }
   
   .maintenance-request {
@@ -8,7 +8,7 @@
     padding: 20px;
     width: 90%;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .maintenance-text {
@@ -17,20 +17,20 @@
     color: #333;
   }
   
-  /* Custom status badge styling */
+  
   .status-badge {
     display: inline-block;
-    width: 75px; /* Set a fixed width */
-    height: 24px; /* Set a fixed height */
-    line-height: 24px; /* Vertically center text by matching the height */
+    width: 75px; 
+    height: 24px; 
+    line-height: 24px; 
     padding: 2px 5px;
     border-radius: 12px;
     font-weight: bold;
     font-size: 12px;
     color: white;
     text-align: center;
-    overflow: hidden; /* Prevent text overflow */
-    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; 
+    white-space: nowrap;
   }
   
   /* Status colors */
@@ -56,7 +56,7 @@
   
   /* Additional row styling for better alignment */
   .MuiDataGrid-row {
-    height: 52px; /* Ensure row height fits contents */
+    height: 52px; 
     display: flex;
     align-items: center;
   }
@@ -86,14 +86,17 @@
     }
 
     .maintenance-request {
-      width: 28%;
+      width: 100%;
     }
   }
   
   @media (max-width: 480px) {
     .maintenance-wrapper {
       padding: 10px;
+      width: 100%;
     }
+
+
   
     .MuiDataGrid-root .MuiDataGrid-columnHeader {
       font-size: 0.7rem;

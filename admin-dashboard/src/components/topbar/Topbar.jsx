@@ -7,6 +7,60 @@ import SearchIcon from "@mui/icons-material/Search";
 import logo from "../../img/logo.png";
 import "./topbar.css";
 
+// Token management utilities
+const getStoredToken = () => localStorage.getItem('accessToken');
+const setStoredToken = (token) => localStorage.setItem('accessToken', token);
+const getStoredRefreshToken = () => localStorage.getItem('refreshToken');
+
+const refreshAccessToken = async () => {
+  try {
+    const refreshToken = getStoredRefreshToken();
+    if (!refreshToken) throw new Error('No refresh token available');
+
+    const response = await fetch('/api/refreshtoken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        refresh: refreshToken
+      })
+    });
+
+    if (!response.ok) throw new Error('Token refresh failed');
+
+    const data = await response.json();
+    setStoredToken(data.access);
+    return data.access;
+  } catch (error) {
+    console.error('Error refreshing token:', error);
+    window.location.href = '/';
+    return null;
+  }
+};
+
+const fetchWithToken = async (url, options = {}) => {
+  let token = getStoredToken();
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...options.headers,
+    'Authorization': `Bearer ${token}`
+  };
+
+  let response = await fetch(url, { ...options, headers });
+
+  if (response.status === 401) {
+    token = await refreshAccessToken();
+    if (!token) return null;
+
+    headers.Authorization = `Bearer ${token}`;
+    response = await fetch(url, { ...options, headers });
+  }
+
+  return response;
+};
+
 export default function Topbar() {
   const [input, setInput] = useState("");
   const [notifications, setNotifications] = useState([]);
@@ -14,23 +68,68 @@ export default function Topbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMessagesOpen, setIsMessagesOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({ name: 'Jude Uche', avatar: '../assets/baby.png' });
 
-  // Mock data fetching for messages and notifications
-  useEffect(() => {
-    // Replace these with real API calls as needed
-    setMessages([{ id: 1, text: "New message from Alice" }, { id: 2, text: "Meeting reminder" }]);
-    setNotifications([{ id: 1, text: "Assignment due" }, { id: 2, text: "New grade posted" }]);
-  }, []);
+  // Fetch messages and notifications with token
+  const fetchUserData = async () => {
+    try {
+      const [messagesResponse, notificationsResponse, profileResponse] = await Promise.all([
+        fetchWithToken('/api/messages'),
+        fetchWithToken('/api/notifications'),
+        fetchWithToken('/api/profile')
+      ]);
 
-  const fetchData = (value) => {
-    fetch("...") // Add actual API URL here
-      .then((res) => res.json())
-      .then((json) => console.log(json));
+      if (messagesResponse?.ok) {
+        const messagesData = await messagesResponse.json();
+        setMessages(messagesData);
+      }
+
+      if (notificationsResponse?.ok) {
+        const notificationsData = await notificationsResponse.json();
+        setNotifications(notificationsData);
+      }
+
+      if (profileResponse?.ok) {
+        const profileData = await profileResponse.json();
+        setUserProfile(profileData);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   };
 
-  const handleChange = (value) => {
+  useEffect(() => {
+    fetchUserData();
+    
+    // Refresh data periodically
+    const refreshInterval = setInterval(fetchUserData, 5 * 60 * 1000); // Every 5 minutes
+    
+    return () => clearInterval(refreshInterval);
+  }, []);
+
+  const handleSearch = async (value) => {
     setInput(value);
-    fetchData(value);
+    try {
+      const response = await fetchWithToken(`/api/search?query=${encodeURIComponent(value)}`);
+      if (response?.ok) {
+        const searchResults = await response.json();
+        // Handle search results as needed
+        console.log(searchResults);
+      }
+    } catch (error) {
+      console.error('Error performing search:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetchWithToken('/api/logout', { method: 'POST' });
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   // Toggle dropdowns
@@ -52,7 +151,7 @@ export default function Topbar() {
               type='text'
               placeholder='Search for students by ID or username.'
               value={input}
-              onChange={(e) => handleChange(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>
@@ -83,14 +182,14 @@ export default function Topbar() {
           </div>
 
           <div className='rightRight' onClick={toggleDropdown}>
-            <h3>Jude Uche</h3>
-            <img src='../assets/baby.png' alt='Profile' className='topAvatar' />
+            <h3>{userProfile.name}</h3>
+            <img src={userProfile.avatar} alt='Profile' className='topAvatar' />
             <ArrowDropDownIcon className='downArrow' />
             {isDropdownOpen && (
               <div className='dropdown'>
                 <div className='dropdownItem'>Profile</div>
                 <div className='dropdownItem'>Settings</div>
-                <div className='dropdownItem'>Logout</div>
+                <div className='dropdownItem' onClick={handleLogout}>Logout</div>
               </div>
             )}
           </div>
@@ -99,4 +198,3 @@ export default function Topbar() {
     </div>
   );
 }
-

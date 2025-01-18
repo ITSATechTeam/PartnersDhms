@@ -103,8 +103,8 @@ const Parts = () => {
       </div>
       <div className='maintenance-request'>
         <FilterBar />
-        <Paper sx={{ 
-    width: '100%', 
+        <Paper className="paper" sx={{ 
+    width: '96%', 
     marginTop: 2, 
     boxShadow: 'none',
     padding: { xs: 1, sm: 2, md: 3 }, // Adjust padding based on screen size

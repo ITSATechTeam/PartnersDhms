@@ -3,15 +3,39 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Checkbox from "@mui/material/Checkbox";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import "./SignUp.css";
 import image from "../../img/printed-circuit-board-rafiki0.svg";
 import image1 from "../../img/i-tsda-logo-10.png";
-import image2 from "../../img/check0.svg";
-import image3 from "../../img/fi-eye-off0.svg";
 import apiClient from "../../utils/api";
 
+const PasswordRequirement = ({ fulfilled, label }) => (
+  <div className="password-requirement">
+    <Checkbox
+      checked={fulfilled}
+      icon={<RadioButtonUncheckedIcon />}
+      checkedIcon={<CheckCircleIcon />}
+      sx={{
+        color: '#ececec',
+        '&.Mui-checked': {
+          color: '#2a66b0',
+        },
+        padding: '4px',
+      }}
+      disabled
+    />
+    <span className={`requirement-label ${fulfilled ? 'fulfilled' : ''}`}>
+      {label}
+    </span>
+  </div>
+);
+
 export default function Signup() {
-  // Initialize the navigate function
   const navigate = useNavigate();
 
   // State variables
@@ -32,57 +56,47 @@ export default function Signup() {
   });
   const [showPasswordCriteria, setShowPasswordCriteria] = useState(false);
 
-  // Snackbar state for Material-UI alerts
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  // List of states in Nigeria
   const states = [
-    "Abia",
-    "Adamawa",
-    "Akwa Ibom",
-    "Anambra",
-    "Bauchi",
-    "Bayelsa",
-    "Benue",
-    "Borno",
-    "Cross River",
-    "Delta",
-    "Ebonyi",
-    "Edo",
-    "Ekiti",
-    "Enugu",
-    "Gombe",
-    "Imo",
-    "Jigawa",
-    "Kaduna",
-    "Kano",
-    "Kogi",
-    "Kwara",
-    "Lagos",
-    "Nasarawa",
-    "Niger",
-    "Ogun",
-    "Ondo",
-    "Osun",
-    "Oyo",
-    "Plateau",
-    "Rivers",
-    "Sokoto",
-    "Taraba",
-    "Yobe",
-    "Zamfara",
+    "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", 
+    "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "Gombe", 
+    "Imo", "Jigawa", "Kaduna", "Kano", "Kogi", "Kwara", "Lagos", "Nasarawa", 
+    "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", 
+    "Taraba", "Yobe", "Zamfara"
   ];
 
-  // Handle password visibility toggle
+  const passwordRequirements = [
+    {
+      key: 'min8Chars',
+      label: 'Minimum of 8 characters',
+      fulfilled: passwordCriteria.min8Chars
+    },
+    {
+      key: 'hasUppercase',
+      label: 'One uppercase letter',
+      fulfilled: passwordCriteria.hasUppercase
+    },
+    {
+      key: 'hasNumber',
+      label: 'One number',
+      fulfilled: passwordCriteria.hasNumber
+    },
+    {
+      key: 'hasSpecialChar',
+      label: 'One special character',
+      fulfilled: passwordCriteria.hasSpecialChar
+    }
+  ];
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  // Check password strength
   const checkPassword = (password) => {
     setPassword(password);
     setPasswordCriteria({
@@ -93,7 +107,6 @@ export default function Signup() {
     });
   };
 
-  // Automatically check the checkbox when all password criteria are met
   useEffect(() => {
     const allCriteriaMet =
       passwordCriteria.min8Chars &&
@@ -102,31 +115,77 @@ export default function Signup() {
       passwordCriteria.hasSpecialChar;
 
     if (allCriteriaMet) {
-      setCheckmark(true); // Automatically check the checkbox
+      setCheckmark(true);
     }
   }, [passwordCriteria]);
 
-  // Toggle the checkbox manually
   const toggleCheckmark = () => {
     setCheckmark(!checkmark);
   };
 
-  // Show password criteria when password input is focused
   const handlePasswordFocus = () => {
     setShowPasswordCriteria(true);
   };
 
-  // Hide password criteria when password input is blurred
   const handlePasswordBlur = () => {
     if (password.length === 0) {
       setShowPasswordCriteria(false);
     }
   };
 
-  // Handle form submission
+  const api = axios.create({
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  api.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  api.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      const originalRequest = error.config;
+
+      if (error.response?.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        try {
+          const refreshToken = localStorage.getItem("refreshToken");
+          const response = await axios.post("/api/refreshtoken", {
+            refresh_token: refreshToken,
+          });
+
+          if (response.data.access) {
+            localStorage.setItem("accessToken", response.data.access);
+            api.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
+            originalRequest.headers["Authorization"] = `Bearer ${response.data.access}`;
+            return api(originalRequest);
+          }
+        } catch (refreshError) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          window.location.href = "/";
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
+
   const createAccount = async (e) => {
     e.preventDefault();
-  
+
     if (
       !technicianName ||
       !technicianEmail ||
@@ -142,50 +201,56 @@ export default function Signup() {
       });
       return;
     }
-  
+
     const technicianData = {
-      technicianEmail,            // From useState
-      technicianName,             // From useState
-      technicianPhoneNumber,      // From useState
-      technicianAvailability,     // From useState
-      technicianLocation,         // From useState
-      password,                   // From useState
+      technicianEmail,
+      technicianName,
+      technicianPhoneNumber,
+      technicianAvailability,
+      technicianLocation,
+      password,
     };
-    
-  
+
     setLoader(true);
-  
+
     try {
-      const response = await apiClient.post("/registertechnician", technicianData);
-  
-      if (response.data.status === "success") {
-        const token = response.data.token;
-        if (token) {
-          localStorage.setItem("authToken", token);
+      const response = await api.post("/api/registertechnician", technicianData);
+
+      if (response.data.status === 200 || response.data.status === "success") {
+        const tokens = response.data.token || response.data.Token;
+        const access = tokens?.access || tokens?.accessToken;
+        const refresh = tokens?.refresh || tokens?.refreshToken;
+
+        if (access && refresh) {
+          localStorage.setItem("accessToken", access);
+          localStorage.setItem("refreshToken", refresh);
+          api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
         }
-  
+
         setSnackbar({
           open: true,
           message: "Technical partner profile created successfully!",
           severity: "success",
         });
+
         setTimeout(() => {
-          navigate("/"); // Navigate to another page after success
+          navigate("/");
         }, 1500);
       } else {
-        setSnackbar({
-          open: true,
-          message: response.data.message || "Account creation failed!",
-          severity: "error",
-        });
+        throw new Error(response.data.message || "Registration failed");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
+      console.error("Registration error:", error);
+
+      if (error.response?.status === 400) {
         const errorMessage = error.response.data.error_message;
-        const formattedError = Object.keys(errorMessage)
-          .map((key) => `${key}: ${errorMessage[key]}`)
-          .join("\n");
-  
+        const formattedError =
+          typeof errorMessage === "object"
+            ? Object.keys(errorMessage)
+                .map((key) => `${key}: ${errorMessage[key]}`)
+                .join("\n")
+            : errorMessage;
+
         setSnackbar({
           open: true,
           message: `Validation Error:\n${formattedError}`,
@@ -194,7 +259,7 @@ export default function Signup() {
       } else {
         setSnackbar({
           open: true,
-          message: "An unexpected error occurred. Please try again.",
+          message: error.message || "An unexpected error occurred. Please try again.",
           severity: "error",
         });
       }
@@ -202,16 +267,13 @@ export default function Signup() {
       setLoader(false);
     }
   };
-  
 
-  // Handle Snackbar close
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
   return (
-    <div className='sign-up'>
-      {/* Snackbar for notifications */}
+    <div className="sign-up">
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
@@ -227,16 +289,16 @@ export default function Signup() {
         </Alert>
       </Snackbar>
 
-      <div className='itsa-logo'>
-        <img className='i-tsda-logo-1' src={image1} alt='Logo' />
-        <div className='close'>
-          <div className='welcome'>Welcome!</div>
+      <div className="itsa-logo">
+        <img className="i-tsda-logo-1" src={image1} alt="Logo" />
+        <div className="close">
+          <div className="welcome">Welcome!</div>
           <img
-            className='printed-circuit-board-rafiki'
+            className="printed-circuit-board-rafiki"
             src={image}
-            alt='Rafiki'
+            alt="Rafiki"
           />
-          <div className='paragraph'>
+          <div className="paragraph">
             Become part of a dynamic network where your skills keep devices in
             top shape. Sign up to simplify your workflow and make every repair
             count. Let's power the future, one device at a time.
@@ -244,56 +306,56 @@ export default function Signup() {
         </div>
       </div>
 
-      <div className='sign-up2'>
-        <div className='sign-up3'>
-          <div className='frame-1000005957'>
-            <div className='create-your-account'>Create your account</div>
+      <div className="sign-up2">
+        <div className="sign-up3">
+          <div className="frame-1000005957">
+            <div className="create-your-account">Create your account</div>
           </div>
           <form onSubmit={createAccount}>
-            <div className='frame-1000005955'>
-              <div className='frame-11939'>
-                <div className='label'>Technician Name</div>
+            <div className="frame-1000005955">
+              <div className="frame-11939">
+                <div className="label">Technician Name</div>
                 <input
-                  type='text'
-                  id='technician-name'
-                  className='input-text'
+                  type="text"
+                  id="technician-name"
+                  className="input-text"
                   value={technicianName}
                   onChange={(e) => setTechnicianName(e.target.value)}
                   required
                 />
               </div>
-              <div className='frame-11941'>
-                <div className='label'>Email</div>
+              <div className="frame-11941">
+                <div className="label">Email</div>
                 <input
-                  type='email'
-                  id='technician-email'
-                  className='input-text'
+                  type="email"
+                  id="technician-email"
+                  className="input-text"
                   value={technicianEmail}
                   onChange={(e) => setTechnicianEmail(e.target.value)}
                   required
                 />
               </div>
-              <div className='frame-427319282'>
-                <div className='label'>Phone No.</div>
+              <div className="frame-427319282">
+                <div className="label">Phone No.</div>
                 <input
-                  type='tel'
-                  id='technician-phone'
-                  className='input-text'
+                  type="tel"
+                  id="technician-phone"
+                  className="input-text"
                   value={technicianPhoneNumber}
                   onChange={(e) => setTechnicianPhoneNumber(e.target.value)}
                   required
                 />
               </div>
-              <div className='frame-11943'>
-                <div className='label'>Location</div>
+              <div className="frame-11943">
+                <div className="label">Location</div>
                 <select
-                  id='technician-location'
-                  className='input-text'
+                  id="technician-location"
+                  className="input-text"
                   value={technicianLocation}
                   onChange={(e) => setTechnicianLocation(e.target.value)}
                   required
                 >
-                  <option value=''>Select Location</option>
+                  <option value="">Select Location</option>
                   {states.map((state) => (
                     <option key={state} value={state}>
                       {state}
@@ -301,123 +363,82 @@ export default function Signup() {
                   ))}
                 </select>
               </div>
-              <div className='frame-11943'>
-                <div className='label'>Availability</div>
+              <div className="frame-11943">
+                <div className="label">Availability</div>
                 <select
-                  id='availability'
-                  className='input-text'
+                  id="availability"
+                  className="input-text"
                   value={technicianAvailability}
                   onChange={(e) => setTechnicianAvailability(e.target.value)}
                   required
                 >
-                  <option value=''>Select Availability</option>
-                  <option value='Full-time'>Full-time</option>
-                  <option value='Part-time'>Part-time</option>
+                  <option value="">Select Availability</option>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
                 </select>
               </div>
-              <div className='frame-1194'>
-                <div className='frame-11937'>
-                  <div className='label2'>Password</div>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id='password'
-                    className='input-text'
-                    value={password}
-                    onChange={(e) => checkPassword(e.target.value)}
-                    onFocus={handlePasswordFocus}
-                    onBlur={handlePasswordBlur}
-                    required
-                  />
-                  <div className='eye-off' onClick={togglePasswordVisibility}>
-                    <img
-                      className='fi-eye-off'
-                      src={image3}
-                      alt='Toggle password visibility'
+              <div className="frame-1194">
+                <div className="frame-11937">
+                  <div className="label">Password</div>
+                  <div className="password-input-container">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      className="input-text"
+                      value={password}
+                      onChange={(e) => checkPassword(e.target.value)}
+                      onFocus={handlePasswordFocus}
+                      onBlur={handlePasswordBlur}
+                      required
                     />
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={togglePasswordVisibility}
+                      style={{
+                        position: 'absolute',
+                        right: '8px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        padding: '4px'
+                      }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
                   </div>
                 </div>
               </div>
-              <div
-                className={`frame-1000006009 ${
-                  password.length > 0 ? "active" : ""
-                }`}
-              >
-                <div className='your-password-must-include-at-least'>
-                  Your password must include at least
-                </div>
-                <div className='frame-1000006007'>
-                  <div className='component-17'>
-                    <div
-                      className={`component-16 ${
-                        passwordCriteria.min8Chars ? "active" : ""
-                      }`}
-                      id='min-8-characters'
-                    >
-                      <div className='ellipse-986'></div>
-                      <img className='check' src={image2} alt='check' />
-                    </div>
-                    <div className='at-least-8-characters-long'>
-                      Minimum of 8 characters
-                    </div>
+              
+              {password.length > 0 && (
+                <div className="password-requirements-container">
+                  <div className="requirements-title">
+                    Your password must include at least
                   </div>
-                  <div className='component-18'>
-                    <div
-                      className={`component-16 ${
-                        passwordCriteria.hasUppercase ? "active" : ""
-                      }`}
-                      id='uppercase-letter'
-                    >
-                      <div className='ellipse-986'></div>
-                      <img className='check2' src={image2} alt='check' />
-                    </div>
-                    <div className='at-least-8-characters-long'>
-                      <span>One uppercase letter</span>
-                    </div>
-                  </div>
-                  <div className='component-20'>
-                    <div
-                      className={`component-16 ${
-                        passwordCriteria.hasNumber ? "active" : ""
-                      }`}
-                      id='one-number'
-                    >
-                      <div className='ellipse-9862'></div>
-                      <img className='check3' src={image2} alt='check' />
-                    </div>
-                    <div className='at-least-8-characters-long2'>
-                      One number
-                    </div>
-                  </div>
-                  <div className='component-21'>
-                    <div
-                      className={`component-16 ${
-                        passwordCriteria.hasSpecialChar ? "active" : ""
-                      }`}
-                      id='special-char'
-                    >
-                      <div className='ellipse-986'></div>
-                      <img className='check4' src={image2} alt='check' />
-                    </div>
-                    <div className='at-least-8-characters-long3'>
-                      One special character
-                    </div>
+                  <div className="requirements-list">
+                    {passwordRequirements.map((requirement) => (
+                      <PasswordRequirement
+                        key={requirement.key}
+                        fulfilled={requirement.fulfilled}
+                        label={requirement.label}
+                      />
+                    ))}
                   </div>
                 </div>
-              </div>
-              <div className='frame-11943'>
+              )}
+
+              <div className="frame-11943">
                 <input
-                  type='checkbox'
-                  id='terms'
+                  type="checkbox"
+                  id="terms"
                   checked={checkmark}
                   onChange={toggleCheckmark}
                   required
                 />
-                <label htmlFor='terms'>
+                <label htmlFor="terms">
                   I agree to the terms and conditions
                 </label>
               </div>
-              <button className='button' type='submit'>
-                <div className='button-sample'>Create Account</div>
+              <button className="button" type="submit">
+                <div className="button-sample">Create Account</div>
               </button>
             </div>
           </form>
