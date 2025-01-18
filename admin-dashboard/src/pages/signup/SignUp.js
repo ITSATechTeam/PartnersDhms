@@ -7,8 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Checkbox from "@mui/material/Checkbox";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import "./SignUp.css";
 import image from "../../img/printed-circuit-board-rafiki0.svg";
 import image1 from "../../img/i-tsda-logo-10.png";
@@ -21,15 +21,15 @@ const PasswordRequirement = ({ fulfilled, label }) => (
       icon={<RadioButtonUncheckedIcon />}
       checkedIcon={<CheckCircleIcon />}
       sx={{
-        color: '#ececec',
-        '&.Mui-checked': {
-          color: '#2a66b0',
+        color: "#ececec",
+        "&.Mui-checked": {
+          color: "#2a66b0",
         },
-        padding: '4px',
+        padding: "4px",
       }}
       disabled
     />
-    <span className={`requirement-label ${fulfilled ? 'fulfilled' : ''}`}>
+    <span className={`requirement-label ${fulfilled ? "fulfilled" : ""}`}>
       {label}
     </span>
   </div>
@@ -63,34 +63,63 @@ export default function Signup() {
   });
 
   const states = [
-    "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", 
-    "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "Gombe", 
-    "Imo", "Jigawa", "Kaduna", "Kano", "Kogi", "Kwara", "Lagos", "Nasarawa", 
-    "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", 
-    "Taraba", "Yobe", "Zamfara"
+    "Abia",
+    "Adamawa",
+    "Akwa Ibom",
+    "Anambra",
+    "Bauchi",
+    "Bayelsa",
+    "Benue",
+    "Borno",
+    "Cross River",
+    "Delta",
+    "Ebonyi",
+    "Edo",
+    "Ekiti",
+    "Enugu",
+    "Gombe",
+    "Imo",
+    "Jigawa",
+    "Kaduna",
+    "Kano",
+    "Kogi",
+    "Kwara",
+    "Lagos",
+    "Nasarawa",
+    "Niger",
+    "Ogun",
+    "Ondo",
+    "Osun",
+    "Oyo",
+    "Plateau",
+    "Rivers",
+    "Sokoto",
+    "Taraba",
+    "Yobe",
+    "Zamfara",
   ];
 
   const passwordRequirements = [
     {
-      key: 'min8Chars',
-      label: 'Minimum of 8 characters',
-      fulfilled: passwordCriteria.min8Chars
+      key: "min8Chars",
+      label: "Minimum of 8 characters",
+      fulfilled: passwordCriteria.min8Chars,
     },
     {
-      key: 'hasUppercase',
-      label: 'One uppercase letter',
-      fulfilled: passwordCriteria.hasUppercase
+      key: "hasUppercase",
+      label: "One uppercase letter",
+      fulfilled: passwordCriteria.hasUppercase,
     },
     {
-      key: 'hasNumber',
-      label: 'One number',
-      fulfilled: passwordCriteria.hasNumber
+      key: "hasNumber",
+      label: "One number",
+      fulfilled: passwordCriteria.hasNumber,
     },
     {
-      key: 'hasSpecialChar',
-      label: 'One special character',
-      fulfilled: passwordCriteria.hasSpecialChar
-    }
+      key: "hasSpecialChar",
+      label: "One special character",
+      fulfilled: passwordCriteria.hasSpecialChar,
+    },
   ];
 
   const togglePasswordVisibility = () => {
@@ -169,8 +198,12 @@ export default function Signup() {
 
           if (response.data.access) {
             localStorage.setItem("accessToken", response.data.access);
-            api.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`;
-            originalRequest.headers["Authorization"] = `Bearer ${response.data.access}`;
+            api.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${response.data.access}`;
+            originalRequest.headers[
+              "Authorization"
+            ] = `Bearer ${response.data.access}`;
             return api(originalRequest);
           }
         } catch (refreshError) {
@@ -203,18 +236,21 @@ export default function Signup() {
     }
 
     const technicianData = {
-      technicianEmail,
-      technicianName,
-      technicianPhoneNumber,
-      technicianAvailability,
-      technicianLocation,
-      password,
+      technicianEmail: "user7@example.com",
+      technicianName: "string",
+      technicianPhoneNumber: "09126856789",
+      technicianAvailability: "Ful_lTime",
+      technicianLocation: "string",
+      password: "Password.1",
     };
 
     setLoader(true);
 
     try {
-      const response = await api.post("/api/registertechnician", technicianData);
+      const response = await api.post(
+        "/api/registertechnician",
+        technicianData
+      );
 
       if (response.data.status === 200 || response.data.status === "success") {
         const tokens = response.data.token || response.data.Token;
@@ -259,7 +295,8 @@ export default function Signup() {
       } else {
         setSnackbar({
           open: true,
-          message: error.message || "An unexpected error occurred. Please try again.",
+          message:
+            error.message || "An unexpected error occurred. Please try again.",
           severity: "error",
         });
       }
@@ -395,11 +432,11 @@ export default function Signup() {
                       aria-label="toggle password visibility"
                       onClick={togglePasswordVisibility}
                       style={{
-                        position: 'absolute',
-                        right: '8px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        padding: '4px'
+                        position: "absolute",
+                        right: "8px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        padding: "4px",
                       }}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -407,7 +444,7 @@ export default function Signup() {
                   </div>
                 </div>
               </div>
-              
+
               {password.length > 0 && (
                 <div className="password-requirements-container">
                   <div className="requirements-title">
