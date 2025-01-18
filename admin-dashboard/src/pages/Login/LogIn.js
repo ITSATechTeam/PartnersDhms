@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import loader from '../../components/Loader/Loader'
+import Loader from '../../components/Loader/Loader'
 import axios from "axios";
 import apiClient from "../../utils/api";
 import Snackbar from "@mui/material/Snackbar";
@@ -9,6 +9,7 @@ import "./styleguide.css";
 import "./LogIn.css";
 import image from "../../img/process-cuate.png";
 import image1 from "../../img/google-png-0-1.png";
+import { useAuth } from './AuthContext';
 
 
 
@@ -36,13 +37,13 @@ api.interceptors.request.use(
 );
 
 export default function Login() {
+  const { api, setIsAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [eyeOff, setEyeOff] = useState(true);
   const [isLoader, setLoader] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
- const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("info");
+  
   const [errorMessage, setErrorMessage] = useState("");
   
   const [snackbar, setSnackbar] = useState({
@@ -50,8 +51,7 @@ export default function Login() {
     message: "",
     severity: "info"
   });
-
-  const navigate = useNavigate();
+  
 
   const togglePassword = () => setEyeOff(!eyeOff);
 
@@ -63,85 +63,57 @@ export default function Login() {
     e.preventDefault();
     setLoader(true);
 
-    // Validation
     if (!email || !password) {
       setSnackbar({
         open: true,
-        message: "Please enter both email and password.",
-        severity: "error"
+        message: 'Please enter both email and password.',
+        severity: 'error'
       });
       setLoader(false);
       return;
     }
 
     try {
-      const response = await api.post(
-        '/api/technicianlogin',
-        {
-          technicianEmail: email,
-          password: password,
-        }
-      );
+      const response = await api.post('/api/technicianlogin', {
+        technicianEmail: email,
+        password: password,
+      });
 
-      if (response.data.status === 200 || response.data.status === "success") {
-        // Handle both possible token formats
+      if (response.data.status === 200 || response.data.status === 'success') {
         const tokens = response.data.token || response.data.Token;
         const access = tokens?.access || tokens?.accessToken;
         const refresh = tokens?.refresh || tokens?.refreshToken;
 
         if (access && refresh) {
-          localStorage.setItem("accessToken", access);
-          localStorage.setItem("refreshToken", refresh);
-          api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+          localStorage.setItem('accessToken', access);
+          localStorage.setItem('refreshToken', refresh);
+          setIsAuthenticated(true);
 
           setSnackbar({
             open: true,
-            message: "Login successful!",
-            severity: "success"
+            message: 'Login successful!',
+            severity: 'success'
           });
 
-          // Use navigate instead of window.location
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate('/dashboard');
           }, 1500);
-        } else {
-          throw new Error("Failed to retrieve authentication tokens.");
         }
-      } else {
-        throw new Error(response.data.message || "Login failed");
       }
     } catch (error) {
       console.error('Login error:', error);
-
-      if (error.response?.status === 401) {
-        setSnackbar({
-          open: true,
-          message: "Invalid email or password.",
-          severity: "error"
-        });
-      } else if (error.response?.status === 400) {
-        const errorMessage = error.response.data.error_message;
-        const formattedError = typeof errorMessage === 'object' 
-          ? Object.keys(errorMessage)
-              .map((key) => `${key}: ${errorMessage[key]}`)
-              .join("\n")
-          : errorMessage;
-
-        setSnackbar({
-          open: true,
-          message: `Validation Error:\n${formattedError}`,
-          severity: "error"
-        });
-      } else {
-        setSnackbar({
-          open: true,
-          message: error.message || "An unexpected error occurred. Please try again.",
-          severity: "error"
-        });
-      }
+      
+      const errorMessage = error.response?.status === 401
+        ? 'Invalid email or password.'
+        : error.response?.data?.error_message || 'Login failed. Please try again.';
+      
+      setSnackbar({
+        open: true,
+        message: errorMessage,
+        severity: 'error'
+      });
     } finally {
       setLoader(false);
-      setSnackbarOpen(true);
     }
   };
           
@@ -244,20 +216,20 @@ export default function Login() {
         </div>
       </div>
       <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity={snackbarSeverity}
-          sx={{ width: "100%" }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-      {isLoader && <div className="loader">{loader}</div>}
+  open={snackbar.open}
+  autoHideDuration={6000}
+  onClose={handleSnackbarClose}
+  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+>
+  <Alert
+    onClose={handleSnackbarClose}
+    severity={snackbar.severity}
+    sx={{ width: "100%" }}
+  >
+    {snackbar.message}
+  </Alert>
+</Snackbar>
+{isLoader && <Loader />}
     </div>
   );
 }

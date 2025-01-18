@@ -7,7 +7,7 @@
   padding-top: 70px;
   min-height: 80vh;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
@@ -125,6 +125,7 @@
 @media screen and (max-width: 768px) {
   .help-container {
     padding-top: 40px;
+   
   }
 
   .cards-container {
@@ -146,6 +147,7 @@
 @media screen and (max-width: 480px) {
   .help-container {
     padding: 20px 10px;
+
   }
 
   .help-text {

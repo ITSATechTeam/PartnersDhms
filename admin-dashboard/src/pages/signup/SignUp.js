@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "../Login/AuthContext";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
@@ -12,7 +12,6 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import "./SignUp.css";
 import image from "../../img/printed-circuit-board-rafiki0.svg";
 import image1 from "../../img/i-tsda-logo-10.png";
-import apiClient from "../../utils/api";
 
 const PasswordRequirement = ({ fulfilled, label }) => (
   <div className="password-requirement">
@@ -37,6 +36,7 @@ const PasswordRequirement = ({ fulfilled, label }) => (
 
 export default function Signup() {
   const navigate = useNavigate();
+  const { api } = useAuth();
 
   // State variables
   const [technicianName, setTechnicianName] = useState("");
@@ -137,20 +137,9 @@ export default function Signup() {
   };
 
   useEffect(() => {
-    const allCriteriaMet =
-      passwordCriteria.min8Chars &&
-      passwordCriteria.hasUppercase &&
-      passwordCriteria.hasNumber &&
-      passwordCriteria.hasSpecialChar;
-
-    if (allCriteriaMet) {
-      setCheckmark(true);
-    }
+    const allCriteriaMet = Object.values(passwordCriteria).every(Boolean);
+    setCheckmark(allCriteriaMet);
   }, [passwordCriteria]);
-
-  const toggleCheckmark = () => {
-    setCheckmark(!checkmark);
-  };
 
   const handlePasswordFocus = () => {
     setShowPasswordCriteria(true);
@@ -161,60 +150,6 @@ export default function Signup() {
       setShowPasswordCriteria(false);
     }
   };
-
-  const api = axios.create({
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  });
-
-  api.interceptors.request.use(
-    (config) => {
-      const token = localStorage.getItem("accessToken");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
-  api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-
-      if (error.response?.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-
-        try {
-          const refreshToken = localStorage.getItem("refreshToken");
-          const response = await axios.post("/api/refreshtoken", {
-            refresh_token: refreshToken,
-          });
-
-          if (response.data.access) {
-            localStorage.setItem("accessToken", response.data.access);
-            api.defaults.headers.common[
-              "Authorization"
-            ] = `Bearer ${response.data.access}`;
-            originalRequest.headers[
-              "Authorization"
-            ] = `Bearer ${response.data.access}`;
-            return api(originalRequest);
-          }
-        } catch (refreshError) {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          window.location.href = "/";
-        }
-      }
-      return Promise.reject(error);
-    }
-  );
 
   const createAccount = async (e) => {
     e.preventDefault();
@@ -235,13 +170,35 @@ export default function Signup() {
       return;
     }
 
+    // Validate phone number format
+    const phoneRegex = /^\d{11}$/;
+    if (!phoneRegex.test(technicianPhoneNumber)) {
+      setSnackbar({
+        open: true,
+        message: "Please enter a valid 11-digit phone number.",
+        severity: "error",
+      });
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(technicianEmail)) {
+      setSnackbar({
+        open: true,
+        message: "Please enter a valid email address.",
+        severity: "error",
+      });
+      return;
+    }
+
     const technicianData = {
-      technicianEmail: "user7@example.com",
+      technicianEmail: "frank@gmail.com",
       technicianName: "string",
-      technicianPhoneNumber: "09126856789",
+      technicianPhoneNumber: "09127980346",
       technicianAvailability: "Ful_lTime",
       technicianLocation: "string",
-      password: "Password.1",
+      password: "string",
     };
 
     setLoader(true);
@@ -253,53 +210,31 @@ export default function Signup() {
       );
 
       if (response.data.status === 200 || response.data.status === "success") {
-        const tokens = response.data.token || response.data.Token;
-        const access = tokens?.access || tokens?.accessToken;
-        const refresh = tokens?.refresh || tokens?.refreshToken;
-
-        if (access && refresh) {
-          localStorage.setItem("accessToken", access);
-          localStorage.setItem("refreshToken", refresh);
-          api.defaults.headers.common["Authorization"] = `Bearer ${access}`;
-        }
-
         setSnackbar({
           open: true,
-          message: "Technical partner profile created successfully!",
+          message:
+            "Technical partner profile created successfully! Redirecting to login...",
           severity: "success",
         });
 
         setTimeout(() => {
           navigate("/");
-        }, 1500);
-      } else {
-        throw new Error(response.data.message || "Registration failed");
+        }, 2000);
       }
     } catch (error) {
       console.error("Registration error:", error);
 
-      if (error.response?.status === 400) {
-        const errorMessage = error.response.data.error_message;
-        const formattedError =
-          typeof errorMessage === "object"
-            ? Object.keys(errorMessage)
-                .map((key) => `${key}: ${errorMessage[key]}`)
-                .join("\n")
-            : errorMessage;
+      const errorMessage = error.response?.data?.error_message;
+      const formattedError =
+        typeof errorMessage === "object"
+          ? Object.values(errorMessage).join("\n")
+          : errorMessage || "Registration failed. Please try again.";
 
-        setSnackbar({
-          open: true,
-          message: `Validation Error:\n${formattedError}`,
-          severity: "error",
-        });
-      } else {
-        setSnackbar({
-          open: true,
-          message:
-            error.message || "An unexpected error occurred. Please try again.",
-          severity: "error",
-        });
-      }
+      setSnackbar({
+        open: true,
+        message: formattedError,
+        severity: "error",
+      });
     } finally {
       setLoader(false);
     }
@@ -467,16 +402,26 @@ export default function Signup() {
                   type="checkbox"
                   id="terms"
                   checked={checkmark}
-                  onChange={toggleCheckmark}
+                  onChange={() => setCheckmark(!checkmark)}
                   required
                 />
-                <label htmlFor="terms">
+                <label htmlFor="terms" className="terms-label">
                   I agree to the terms and conditions
                 </label>
               </div>
-              <button className="button" type="submit">
-                <div className="button-sample">Create Account</div>
+              <button
+                className="button"
+                type="submit"
+                disabled={!checkmark || loader}
+              >
+                <div className="button-sample">
+                  {loader ? "Creating Account..." : "Create Account"}
+                </div>
               </button>
+
+              <div className="login-link">
+                Already have an account? <a href="/">Login here</a>
+              </div>
             </div>
           </form>
         </div>

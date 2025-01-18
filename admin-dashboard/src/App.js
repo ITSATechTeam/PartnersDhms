@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { useAuth } from './pages/Login/AuthContext';
 import Sidebar from './components/sidebar/Sidebar';
 import Topbar from './components/topbar/Topbar';
 import MaintenanceRequest from './pages/MaintenanceRequest/MaintenanceRequest';
@@ -16,26 +17,51 @@ import Loader from './components/Loader/Loader';
 import LogIn from './pages/Login/LogIn';
 import SignUp from './pages/signup/SignUp';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
+import { AuthProvider } from './pages/Login/AuthContext';
 import './app.css';
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
+
+// Public Route Component (prevents authenticated users from accessing auth pages)
+const PublicRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
-    <Router>
-      <div>
-        <RoutesWithLayout />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </AuthProvider>
   );
 }
 
-function RoutesWithLayout() {
+function AppContent() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const { isAuthenticated } = useAuth();
 
   // Trigger loading animation on initial load and route changes
   useEffect(() => {
     setLoading(true);
-    // Wait until next render cycle to remove loading state
     const timeout = setTimeout(() => setLoading(false), 200);
     return () => clearTimeout(timeout);
   }, [location]);
@@ -55,54 +81,131 @@ function RoutesWithLayout() {
   ];
   const showRightbars = !noRightbarRoutes.includes(location.pathname) && !isAuthRoute;
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="appContainer">
-      {/* Show loader on loading state */}
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          {!isAuthRoute && <Topbar />}
-          <div className="container">
-            {!isAuthRoute && <Sidebar />}
-            <div className="contentWrapper">
-              <div className="mainContent1">
-                <Routes>
-                  {/* Authentication routes */}
-                  <Route path="/" element={<LogIn />} />
-                  <Route path="/SignUp" element={<SignUp />} />
-                  <Route path="/ResetPassword" element={<ResetPassword />} />
+      {isAuthenticated && !isAuthRoute && <Topbar />}
+      <div className="container">
+        {isAuthenticated && !isAuthRoute && <Sidebar />}
+        <div className="contentWrapper">
+          <div className="mainContent1">
+            <Routes>
+              {/* Public Routes */}
+              <Route
+                path="/"
+                element={
+                  <PublicRoute>
+                    <LogIn />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/SignUp"
+                element={
+                  <PublicRoute>
+                    <SignUp />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/ResetPassword"
+                element={
+                  <PublicRoute>
+                    <ResetPassword />
+                  </PublicRoute>
+                }
+              />
 
-                  {/* Main app routes */}
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/MaintenanceRequest" element={<MaintenanceRequest />} />
-                  <Route path="/PartsManagement" element={<PartsManagement />} />
-                  <Route path="/wallet" element={<Wallet />} />
-                  <Route path="/help" element={<Help />} />
-                  <Route path="/settings" element={<Setting />} />
-                  <Route path="/faqs" element={<FAQs />} />
-                  {/* Add additional routes as needed */}
-                </Routes>
-              </div>
+              {/* Protected Routes */}
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/MaintenanceRequest"
+                element={
+                  <ProtectedRoute>
+                    <MaintenanceRequest />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/PartsManagement"
+                element={
+                  <ProtectedRoute>
+                    <PartsManagement />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/wallet"
+                element={
+                  <ProtectedRoute>
+                    <Wallet />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/help"
+                element={
+                  <ProtectedRoute>
+                    <Help />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <Setting />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/faqs"
+                element={
+                  <ProtectedRoute>
+                    <FAQs />
+                  </ProtectedRoute>
+                }
+              />
 
-              {/* Conditional rendering of Rightbars */}
-              {showRightbars && (
-                <div className="Rightbars">
-                  <Rightbar percentage={90} />
-                  <RightbarTwo />
-                  <RightbarThree />
-                </div>
-              )}
-            </div>
+              {/* Catch all route - redirect to dashboard if authenticated, login if not */}
+              <Route
+                path="*"
+                element={
+                  isAuthenticated ? (
+                    <Navigate to="/dashboard" replace />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
+            </Routes>
           </div>
-        </>
-      )}
+
+          {/* Conditional rendering of Rightbars */}
+          {showRightbars && isAuthenticated && (
+            <div className="Rightbars">
+              <Rightbar percentage={90} />
+              <RightbarTwo />
+              <RightbarThree />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
 
 export default App;
-
 
 
 
