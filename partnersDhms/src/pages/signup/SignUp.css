@@ -1,0 +1,542 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Montserrat:wght@400;500;700&display=swap");
+
+/* Base styles */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: "Nunito";
+}
+
+.sign-up {
+  background: #ffffff;
+  min-height: 80vh;
+  width: 90vw;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin: 0 auto;
+  max-width: 100%;
+  overflow: hidden;
+  top: 0;
+}
+
+.sign-up2 {
+  background: #f7f7fb;
+  width: 100%;
+  min-height: 0vh;
+  position: relative;
+  padding: rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-up3 {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  margin-top: 20px;
+  max-width: 500px;
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.your-password-must-include-at-least {
+  color: #2b2b2b;
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 22.4px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.component-17,
+.component-18,
+.component-20,
+.component-21 {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.component-16 {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.ellipse-986 {
+  background: #2a66b0;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: background 0.3s ease;
+}
+
+.ellipse-9862 {
+  background: #ececec;
+  border-radius: 50%;
+  border: 1px solid #c3c3c3;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all 0.3s ease;
+}
+
+.check,
+.check2,
+.check3,
+.check4,
+.check5 {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  transition: opacity 0.3s ease;
+}
+
+.at-least-8-characters-long,
+.at-least-8-characters-long2 {
+  color: #2a66b0;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 22.4px;
+}
+
+.button {
+  background: #2a66b0;
+  border-radius: 8px;
+  padding: 12px;
+  width: 90%;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background: #1e4c8a;
+}
+
+.button-sample {
+  color: #ffffff;
+  font-family: "Nunito-Bold", sans-serif;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.social-login {
+  margin-top: 1.5rem;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
+.frame-427319248 {
+  background: #e1e7fc;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.frame-427319248:hover {
+  background: #d1dbf9;
+}
+
+.sign-up-with-google {
+  color: #2a66b0;
+  font-family: "Nunito-SemiBold", sans-serif;
+  font-size: 16px;
+  letter-spacing: -0.06em;
+  font-weight: 600;
+}
+
+.welcome {
+  color: #000000;
+  text-align: left;
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 38.96666717529297px;
+  line-height: 66.8px;
+  font-weight: 400;
+  position: absolute;
+  left: 88px;
+  top: 80px;
+}
+
+.create-your-account {
+  color: var(--foundation-gray-gray-800, #212121);
+  text-align: left;
+  font-family: "Nunito-Bold", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+  padding: 20px;
+  left: -16px;
+}
+
+.label {
+  color: #171a1c;
+  text-align: left;
+  font-family: "Nunito-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  position: relative;
+  padding: 5px;
+  left: -10px;
+}
+
+.close {
+  margin-right: 200px;
+  padding: 0;
+  top: 0;
+}
+
+.printed-circuit-board-rafiki {
+  height: 70vh;
+  position: relative;
+  left: 0px;
+  top: 90px;
+  overflow: visible;
+}
+
+.i-tsda-logo-1 {
+  width: 10%;
+  position: absolute;
+  right: 0%;
+  left: 3%;
+  bottom: 0%;
+  top: 0%;
+}
+
+.paragraph {
+  color: #000000;
+  text-align: left;
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 50px;
+  top: 595px;
+  width: 499px;
+}
+
+.password-requirements-container {
+  margin-top: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.terms-label {
+  /* margin-right: -480px; */
+}
+
+.term-input {
+  margin-left: -230px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.requirements-title {
+  color: #2b2b2b;
+  font-family: "Montserrat-Medium", sans-serif;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.requirements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.password-requirement {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.requirement-label {
+  color: #757575;
+  font-family: "Montserrat-Regular", sans-serif;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.requirement-label.fulfilled {
+  color: #2a66b0;
+}
+
+/* Update existing password input styles */
+.password-input-container {
+  position: relative;
+  width: 84%;
+  padding-right: 40px;
+}
+
+.input-text {
+  padding-right: 40px;
+  width: 10%;
+}
+
+.frame-11943 {
+  width: 90%;
+}
+
+.terms-label {
+  margin-left: -233px;
+  top: 20px;
+}
+.terms-check {
+  margin-left: -233px;
+}
+
+.frame-11941 {
+  width: 84%;
+}
+
+.frame-427319282 {
+  width: 84%;
+}
+
+.frame-11939 {
+  width: 84%;
+}
+
+.login-link a {
+  text-decoration: none;
+  color: #052449;
+}
+
+.password-input-container .MuiIconButton-root {
+  color: #757575;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .sign-up {
+    flex-direction: column;
+  }
+
+  .sign-up2 {
+    width: 100%;
+    min-height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .printed-circuit-board-rafiki {
+    max-width: 80%;
+    margin: 2rem auto;
+  }
+
+  .paragraph {
+    margin: 2rem auto;
+    padding: 0 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .sign-up3 {
+    padding: 1.5rem;
+  }
+
+  .frame-427319248 {
+    padding: 12px;
+  }
+
+  .sign-up-with-google {
+    font-size: 13px;
+  }
+
+  .password-requirements-container {
+    padding: 12px;
+  }
+
+  .requirements-title {
+    font-size: 13px;
+  }
+
+  .requirement-label {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sign-up3 {
+    padding: 1rem;
+  }
+
+  .frame-11943 {
+    max-width: 94%;
+  }
+  .sign-up {
+    flex-direction: column;
+    left: 20px;
+    max-width: 100vw;
+  }
+
+  .welcome {
+    top: 40px;
+    left: 50px;
+  }
+
+  .sign-up2 {
+    width: 100%;
+    min-height: auto;
+    padding: 2rem 0rem;
+  }
+
+  .printed-circuit-board-rafiki {
+    max-width: 90vw;
+
+    top: 0;
+  }
+
+  .i-tsda-logo-1 {
+    width: 19%;
+
+    left: 3%;
+    bottom: 0%;
+    top: 5px;
+  }
+
+  .paragraph {
+    margin: 2rem auto;
+    padding: 3 1rem;
+    text-align: center;
+  }
+
+  .button {
+    height: 40px;
+    margin-left: 10px;
+  }
+
+  .frame-427319248 {
+    padding: 10px;
+  }
+
+  .terms-label {
+    margin-left: -140px;
+    top: 20px;
+  }
+  .terms-check {
+    margin-left: -126px;
+  }
+
+  .close {
+    height: 60vh;
+    padding: 40px 0px;
+  }
+
+  .frame-11943 {
+    width: 100%;
+  }
+
+  .login-link {
+    margin-left: 20px;
+  }
+
+  .term-input {
+    margin-left: -130px;
+  }
+}
+
+
+
+/* Form elements */
+.input-text {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #f2f5fa;
+  background: #f2f5fa;
+  border-radius: 8px;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.input-text:focus {
+  outline: none;
+  border-color: #2a66b0;
+}
+
+/* Checkbox styles */
+.frame-427319281 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.checkbox {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.box {
+  background: #052449;
+  border-radius: 3px;
+  border: 0.75px solid #1086c1;
+  width: 18px;
+  height: 18px;
+  transition: all 0.3s ease;
+}
+
+.box:hover {
+  border-color: #2a66b0;
+}
+
+/* Additional utility classes */
+.w-full {
+  width: 100%;
+}
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.items-center {
+  align-items: center;
+}

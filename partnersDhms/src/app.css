@@ -1,0 +1,95 @@
+body {
+    background: #f7f7fb;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0px;
+    width: 100%;
+    opacity: 0; /* Start invisible */
+    transform: translateY(20px); /* Start slightly below */
+    animation: fadeInSlideUp 0.8s ease-out forwards; /* Animation */
+}
+
+.Rightbars {
+    margin-left: 70px;
+}
+
+.contentWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0px;
+    width: 84%;
+    opacity: 0; /* Start invisible */
+    transform: translateY(20px); /* Start slightly below */
+    animation: fadeInSlideUp 0.8s ease-out 0.2s forwards; /* Delayed Animation */
+}
+
+/* Keyframes for fade-in and slide-up effect */
+@keyframes fadeInSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Slide from below */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Reset position */
+    }
+}
+
+
+
+
+
+/* Adjust for tablets and smaller screens */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column; /* Stack items vertically */
+    }
+
+    .Rightbars {
+        margin-left: 0; /* Reset margin */
+        margin-top: 20px; /* Add some space above */
+        align-self: center; /* Center Rightbars */
+        width: 100%; /* Take full width on smaller screens */
+        gap: 15px; /* Adjust spacing */
+    }
+}
+
+/* Adjust for mobile devices */
+@media (max-width: 768px) {
+    .Rightbars {
+        margin-top: 0px; /* Add more spacing above */
+        padding: 10px; /* Add some padding */
+        align-self: center; /* Center Rightbars */
+        width: 90%; /* Take full width on smaller screens */
+        gap: 15px; /* Adjust spacing */
+        margin-left: 150px;
+    }
+
+    .contentWrapper {
+        width: 100%; /* Allow main content to take full width */
+        margin-bottom: 0;
+    }
+    .container{
+        width: 28%;
+        height: fit-content;
+    }
+}
+
+@media (max-width: 1024px) {
+    .contentWrapper {
+        width: 100%; /* Full width for tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .contentWrapper {
+        width: 300%; /* Full width for mobile */
+        flex-direction: column; /* Stack the content vertically */
+      
+    }
+}
